@@ -1,4 +1,5 @@
 ﻿using ApplicationView.Forms.Business;
+using ApplicationView.Forms.Category;
 using ApplicationView.Forms.Roles;
 using BusnessEntities.BE;
 using DataService.Iservice;
@@ -42,6 +43,14 @@ namespace ApplicationView.Forms.Account
             frmbusiness frm = new frmbusiness(_repoBusiness);
             frm.MdiParent = this;
             frm.Show();
+        }
+
+        private void categoriaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmcategory frm = new frmcategory();
+            frm.MdiParent = this;
+            frm.Show();
+            
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BusnessEntities.BE
 {
-    public class Category: BaseBE
+    public class CategoryBE: BaseBE
     {
         public String AccountId { get; set; }
         public String CategoryName { get; set; }

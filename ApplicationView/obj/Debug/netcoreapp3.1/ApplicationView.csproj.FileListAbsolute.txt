@@ -138,3 +138,4 @@ C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\Appli
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.pdb
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.genruntimeconfig.cache
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\bin\Debug\netcoreapp3.1\ApplicationView.dll.config
+C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.Forms.Category.frmcategory.resources

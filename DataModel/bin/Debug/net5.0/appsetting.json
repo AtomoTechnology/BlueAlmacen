@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "data source=DESKTOP-KOS4DK0\\PRADE;initial catalog=bluedbventa_db.Identity;user id=sa;password=516euge94324590;MultipleActiveResultSets=True;App=EntityFramework"
+  }
+}

@@ -1,0 +1,17 @@
+C:\Empredimiento\BLUE\GestionStock\DataModel\bin\Debug\net5.0\appsetting.json
+C:\Empredimiento\BLUE\GestionStock\DataModel\bin\Debug\net5.0\DataModel.dll.config
+C:\Empredimiento\BLUE\GestionStock\DataModel\bin\Debug\net5.0\DataModel.deps.json
+C:\Empredimiento\BLUE\GestionStock\DataModel\bin\Debug\net5.0\DataModel.runtimeconfig.json
+C:\Empredimiento\BLUE\GestionStock\DataModel\bin\Debug\net5.0\DataModel.runtimeconfig.dev.json
+C:\Empredimiento\BLUE\GestionStock\DataModel\bin\Debug\net5.0\DataModel.dll
+C:\Empredimiento\BLUE\GestionStock\DataModel\bin\Debug\net5.0\DataModel.pdb
+C:\Empredimiento\BLUE\GestionStock\DataModel\obj\Debug\net5.0\DataModel.csproj.AssemblyReference.cache
+C:\Empredimiento\BLUE\GestionStock\DataModel\obj\Debug\net5.0\DataModel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Empredimiento\BLUE\GestionStock\DataModel\obj\Debug\net5.0\DataModel.AssemblyInfoInputs.cache
+C:\Empredimiento\BLUE\GestionStock\DataModel\obj\Debug\net5.0\DataModel.AssemblyInfo.cs
+C:\Empredimiento\BLUE\GestionStock\DataModel\obj\Debug\net5.0\DataModel.csproj.CoreCompileInputs.cache
+C:\Empredimiento\BLUE\GestionStock\DataModel\obj\Debug\net5.0\DataModel.dll
+C:\Empredimiento\BLUE\GestionStock\DataModel\obj\Debug\net5.0\refint\DataModel.dll
+C:\Empredimiento\BLUE\GestionStock\DataModel\obj\Debug\net5.0\DataModel.pdb
+C:\Empredimiento\BLUE\GestionStock\DataModel\obj\Debug\net5.0\DataModel.genruntimeconfig.cache
+C:\Empredimiento\BLUE\GestionStock\DataModel\obj\Debug\net5.0\ref\DataModel.dll

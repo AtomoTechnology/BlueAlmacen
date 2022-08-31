@@ -1,0 +1,10 @@
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\bin\Debug\netcoreapp3.1\BusnessEntities.deps.json
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\bin\Debug\netcoreapp3.1\BusnessEntities.dll
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\bin\Debug\netcoreapp3.1\BusnessEntities.pdb
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\netcoreapp3.1\BusnessEntities.csproj.AssemblyReference.cache
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\netcoreapp3.1\BusnessEntities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\netcoreapp3.1\BusnessEntities.AssemblyInfoInputs.cache
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\netcoreapp3.1\BusnessEntities.AssemblyInfo.cs
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\netcoreapp3.1\BusnessEntities.csproj.CoreCompileInputs.cache
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\netcoreapp3.1\BusnessEntities.dll
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\netcoreapp3.1\BusnessEntities.pdb

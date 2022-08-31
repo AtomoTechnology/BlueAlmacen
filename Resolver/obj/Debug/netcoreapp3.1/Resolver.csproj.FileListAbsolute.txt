@@ -1,0 +1,10 @@
+C:\Empredimiento\BLUE\GestionStock\Resolver\bin\Debug\netcoreapp3.1\Resolver.deps.json
+C:\Empredimiento\BLUE\GestionStock\Resolver\bin\Debug\netcoreapp3.1\Resolver.dll
+C:\Empredimiento\BLUE\GestionStock\Resolver\bin\Debug\netcoreapp3.1\Resolver.pdb
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\netcoreapp3.1\Resolver.csproj.AssemblyReference.cache
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\netcoreapp3.1\Resolver.GeneratedMSBuildEditorConfig.editorconfig
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\netcoreapp3.1\Resolver.AssemblyInfoInputs.cache
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\netcoreapp3.1\Resolver.AssemblyInfo.cs
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\netcoreapp3.1\Resolver.csproj.CoreCompileInputs.cache
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\netcoreapp3.1\Resolver.dll
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\netcoreapp3.1\Resolver.pdb

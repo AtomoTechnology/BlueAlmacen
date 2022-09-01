@@ -9,6 +9,9 @@ namespace DataModel.Context
 {
     public partial class DbGestionStockContext : DbContext
     {
+        public DbGestionStockContext() : base()
+        {
+        }
         public DbGestionStockContext(DbContextOptions<DbGestionStockContext> options) : base(options)
         {
         }
@@ -25,18 +28,15 @@ namespace DataModel.Context
 
         #endregion
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.
-        //        UseSqlServer("data source=DESKTOP-KOS4DK0\\PRADE;initial catalog=bluedbventa_db;user id=sa;password=516euge94324590;MultipleActiveResultSets=True;")
-        //        .EnableSensitiveDataLogging(true);
-        //    //var builder = new ConfigurationBuilder()
-        //    //                   .SetBasePath(Directory.GetCurrentDirectory())
-        //    //                   .AddJsonFile("sppsetting.json");
-
-        //    //var configuration =builder.Build();
-        //    //optionsBuilder.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.
+               UseSqlServer("data source=DESKTOP-KOS4DK0\\PRADE;initial catalog=bluedbventa_db;user id=sa;password=516euge94324590;MultipleActiveResultSets=True;")
+               .EnableSensitiveDataLogging(true);
+            }
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

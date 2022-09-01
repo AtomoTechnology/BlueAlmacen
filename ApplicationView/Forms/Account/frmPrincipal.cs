@@ -18,12 +18,14 @@ namespace ApplicationView.Forms.Account
         AccountBE _be;
         private readonly IRoleService _repo;
         private readonly IBusnessService _repoBusiness;
-        public frmPrincipal(AccountBE be, IRoleService repo, IBusnessService repoBusiness)
+        private readonly ICategoryService _repoCategory;
+        public frmPrincipal(AccountBE be, IRoleService repo, IBusnessService repoBusiness, ICategoryService repoCategory)
         {
             InitializeComponent();
             this._be = be;
             _repo = repo;
             _repoBusiness = repoBusiness;
+            _repoCategory = repoCategory;
         }
 
         private void crearUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
@@ -47,7 +49,7 @@ namespace ApplicationView.Forms.Account
 
         private void categoriaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmcategory frm = new frmcategory();
+            frmcategory frm = new frmcategory(_repoCategory);
             frm.MdiParent = this;
             frm.Show();
             

@@ -15,5 +15,6 @@ namespace DataModel.Entities
         public User User { get; set; }
 
         public List<Provider> Providers { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

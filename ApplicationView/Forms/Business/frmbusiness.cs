@@ -26,7 +26,6 @@ namespace ApplicationView.Forms.Business
         }
         private void LoadList()
         {
-
             this.dataList.DataSource = _repo.GetAll(1, 1, 12, "Id", "asc", "", ref count);
             this.HideColumn();
             this.GetPagination();

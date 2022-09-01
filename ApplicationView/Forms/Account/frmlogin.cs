@@ -19,13 +19,15 @@ namespace ApplicationView
     {
         private readonly IAccountService _repo;
         private readonly IRoleService _repoRole;
-        private readonly IBusnessService _repoBusiness;
-        public frmlogin(IAccountService repo, IRoleService repoRole, IBusnessService repoBusiness)
+        private readonly IBusnessService _repoBusiness; 
+        private readonly ICategoryService _repoCategory;
+        public frmlogin(IAccountService repo, IRoleService repoRole, IBusnessService repoBusiness, ICategoryService repoCategory)
         {
             InitializeComponent();
             _repo = repo;
             _repoRole = repoRole;
             _repoBusiness = repoBusiness;
+            _repoCategory = repoCategory;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -104,7 +106,7 @@ namespace ApplicationView
                         //LoginInfo.usuario = Datos.Rows[0]["nombre usuario"].ToString();
                         //LoginInfo.access = Datos.Rows[0]["role"].ToString();
 
-                        frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness); 
+                        frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness, _repoCategory); 
 
                         principal.Show();
                         this.Hide();

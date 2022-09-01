@@ -4,14 +4,16 @@ using DataModel.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataModel.Migrations
 {
     [DbContext(typeof(DbGestionStockContext))]
-    partial class DbGestionStockContextModelSnapshot : ModelSnapshot
+    [Migration("20220901033529_categorysaleproductpurchase")]
+    partial class categorysaleproductpurchase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,7 +104,6 @@ namespace DataModel.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AccountId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryName")
@@ -337,10 +338,8 @@ namespace DataModel.Migrations
             modelBuilder.Entity("DataModel.Entities.Category", b =>
                 {
                     b.HasOne("DataModel.Entities.Account", "Account")
-                        .WithMany("Categories")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("AccountId");
                 });
 
             modelBuilder.Entity("DataModel.Entities.PaymentType", b =>

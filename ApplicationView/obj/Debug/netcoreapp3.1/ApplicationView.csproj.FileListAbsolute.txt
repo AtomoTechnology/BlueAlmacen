@@ -1,5 +1,6 @@
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\bin\Debug\netcoreapp3.1\ApplicationView.exe
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\bin\Debug\netcoreapp3.1\appsetting.json
+C:\Empredimiento\BLUE\GestionStock\ApplicationView\bin\Debug\netcoreapp3.1\ApplicationView.dll.config
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\bin\Debug\netcoreapp3.1\ApplicationView.deps.json
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\bin\Debug\netcoreapp3.1\ApplicationView.runtimeconfig.json
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\bin\Debug\netcoreapp3.1\ApplicationView.runtimeconfig.dev.json
@@ -126,6 +127,7 @@ C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\Appli
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.frmlogin.resources
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.Forms.Account.frmPrincipal.resources
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.Forms.Business.frmbusiness.resources
+C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.Forms.Category.frmcategory.resources
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.Forms.Roles.frmrole.resources
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.Properties.Resources.resources
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.csproj.GenerateResource.cache
@@ -137,5 +139,3 @@ C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\Appli
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.dll
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.pdb
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.genruntimeconfig.cache
-C:\Empredimiento\BLUE\GestionStock\ApplicationView\bin\Debug\netcoreapp3.1\ApplicationView.dll.config
-C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.Forms.Category.frmcategory.resources

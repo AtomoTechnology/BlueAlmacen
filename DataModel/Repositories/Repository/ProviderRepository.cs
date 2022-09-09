@@ -12,62 +12,60 @@ using System.Text;
 
 namespace DataModel.Repositories.Repository
 {
-    public class RoleRepository : IRoleRepository
+    public class ProviderRepository : IProviderRepository
     {
         private readonly DbGestionStockContext _context;
-        public RoleRepository(DbGestionStockContext context)
+        public ProviderRepository(DbGestionStockContext context)
         {
             _context = context;
         }
-        public string Create(Role role)
+        public string Create(Provider provider)
         {
             try
             {
-                if (role == null)
-                    throw new ApiBusinessException("3000", "falta datos roles en los campos obligatorios", System.Net.HttpStatusCode.NotFound, "Http");
-                if (String.IsNullOrEmpty(role.RoleName))
-                    throw new ApiBusinessException("3000", "Debe ingresar el nombre del rol", System.Net.HttpStatusCode.NotFound, "Http");
+                if (provider == null)
+                    throw new ApiBusinessException("3000", "falta datos proveedores en los campos obligatorios", System.Net.HttpStatusCode.NotFound, "Http");
+                if (String.IsNullOrEmpty(provider.Name))
+                    throw new ApiBusinessException("3000", "Debe ingresar el nombre del proveedor", System.Net.HttpStatusCode.NotFound, "Http");
 
-                role.Id = Guid.NewGuid().ToString();
-                role.CreatedDate = DateTime.Now;
-                role.FinalDate = null;
-                role.state = (Int32)StateEnum.Activeted;
+                provider.Id = Guid.NewGuid().ToString();
+                provider.CreatedDate = DateTime.Now;
+                provider.FinalDate = null;
+                provider.state = (Int32)StateEnum.Activeted;
 
-                _context.Add(role);
+                _context.Add(provider);
                 _context.SaveChanges();
-                return "El rol fue guardaddo con exito";
+                return "El proveedor fue guardaddo con exito";
             }
             catch (Exception ex)
             {
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
         }
-
         public string Delete(string id)
         {
             try
             {
-                var entity = _context.Roles.SingleOrDefault(u => u.Id == id && u.FinalDate == null && u.state == (Int32)StateEnum.Activeted);
+                var entity = _context.Providers.SingleOrDefault(u => u.Id == id && u.FinalDate == null && u.state == (Int32)StateEnum.Activeted);
                 if (entity == null)
-                    throw new ApiBusinessException("3000", "NO existe ese rol", System.Net.HttpStatusCode.NotFound, "Http");
-                                
+                    throw new ApiBusinessException("3000", "NO existe ese proveedor", System.Net.HttpStatusCode.NotFound, "Http");
+
                 entity.FinalDate = DateTime.Now;
                 entity.state = (Int32)StateEnum.Deleted;
 
                 _context.SaveChanges();
-                return "El rol fue dado de baja con exito!";
+                return "El proveedor fue dado de baja con exito!";
             }
             catch (Exception ex)
             {
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
         }
-
-        public List<Role> GetAll(int state, int page, int top, string orderBy, string ascending, string name, ref int count)
+        public List<Provider> GetAll(int state, int page, int top, string orderBy, string ascending, string name, ref int count)
         {
             try
             {
-                var entities = _context.Roles.Where(u => u.state == state && ( u.RoleName == name || string.IsNullOrEmpty(name)));
+                var entities = _context.Providers.Where(u => u.state == state && (u.Name == name || string.IsNullOrEmpty(name)));
                 count = entities.Count();
                 var skipAmount = 0;
                 if (page > 0)
@@ -85,12 +83,11 @@ namespace DataModel.Repositories.Repository
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
         }
-
-        public Role GetById(string id)
+        public Provider GetById(string id)
         {
             try
             {
-                var result = _context.Roles.SingleOrDefault(u => u.Id == id && u.state == (Int32)StateEnum.Activeted);
+                var result = _context.Providers.SingleOrDefault(u => u.Id == id && u.state == (Int32)StateEnum.Activeted && u.FinalDate == null);
                 return result;
             }
             catch (Exception ex)
@@ -98,21 +95,22 @@ namespace DataModel.Repositories.Repository
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
         }
-
-        public string Update(string id, Role role)
+        public string Update(string id, Provider provider)
         {
             try
             {
-                var entity = _context.Roles.Find(id);
+                var entity = _context.Providers.Find(id);
                 if (entity == null)
-                    throw new ApiBusinessException("3000", "NO existe ese usuario", System.Net.HttpStatusCode.NotFound, "Http");
+                    throw new ApiBusinessException("3000", "NO existe ese proveedor", System.Net.HttpStatusCode.NotFound, "Http");
 
-                entity.Description = role.Description;
-                entity.RoleName = role.RoleName;
+                entity.Name = provider.Name;
+                entity.Address = provider.Address;
+                entity.Cuit_Cuil = provider.Cuit_Cuil;
+                entity.Phone = provider.Phone;
 
                 _context.SaveChanges();
 
-                return "El rol fue modificado con exito!";
+                return "El provider fue modificado con exito!";
             }
             catch (Exception ex)
             {

@@ -17,7 +17,19 @@ namespace DataService.Service
         {
             _repo = repo;
         }
-        public string ChangePaaword(string oldpass, string newpass) => throw new NotImplementedException();
+        public string ChangePassword(AccountBE be) 
+        {
+            try
+            {
+                var entity = AccountFactory.GetInstance().CreateEntity(be);
+                var result = _repo.ChangePassword(entity);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
+        }
         public AccountBE Login(string username, string userpass) {
             try
             {

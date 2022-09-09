@@ -47,6 +47,7 @@ namespace ApplicationView
                 if (frmlog.GetType() == typeof(frmPrincipal))
                 {
                     frmlog.Close();
+                    Application.Restart();
                     break;
                 }
                 else
@@ -80,37 +81,33 @@ namespace ApplicationView
                 else
                 {
                     AccountBE Datos = _repo.Login(usuario, password);
-                    //if (Datos.Rows[0]["confirm"].ToString() != "True")
-                    //{
-                    //    be.idAccount = Convert.ToInt32(Datos.Rows[0]["idaccout"].ToString());
-                    //    be.userPass = Security.PasswordSecurity.PassValidation.GetInstance().DecryptKey(Datos.Rows[0]["userpass"].ToString());
+                    if (Datos.Confirm == false)
+                    {
+                        LoginInfo.IdAccount = Datos.Id;
+                        LoginInfo.IdUser = Datos.UserId;
+                        LoginInfo.IdRole = Datos.RoleId;
+                        LoginInfo.User = Datos.UserName;
+                        LoginInfo.Pass = Datos.UserPass;
+                        LoginInfo.Access = Datos?.Role?.RoleName;
 
-                    //    LoginInfo.idAccount = Convert.ToInt64(Datos.Rows[0]["idaccout"].ToString());
-                    //    LoginInfo.pass = Security.PasswordSecurity.PassValidation.GetInstance().DecryptKey(Datos.Rows[0]["userpass"].ToString());
-                    //    LoginInfo.idbusiness = Convert.ToInt64(Datos.Rows[0]["idbusiness"].ToString());
-                    //    LoginInfo.idemployee = Convert.ToInt64(Datos.Rows[0]["idemployee"].ToString());
-
-                    //    frmchangepass pass = new frmchangepass(be);
-                    //    pass.Show();
-                    //    this.Hide();
-                    //}
-                    //else
-                    //{
-                        //be.idAccount = Convert.ToInt32(Datos.Rows[0]["idaccout"].ToString());
-                        ////be.nameresponsible = Datos.Rows[0][2].ToString();
-                        //be.access = Datos.Rows[0][3].ToString();
-                        //be.userPass = Security.PasswordSecurity.PassValidation.GetInstance().DecryptKey(Datos.Rows[0]["userpass"].ToString());
-
-                        LoginInfo.idAccount = Datos.Id;
-                        LoginInfo.idbusiness = Datos.RoleId;
-                        //LoginInfo.usuario = Datos.Rows[0]["nombre usuario"].ToString();
-                        //LoginInfo.access = Datos.Rows[0]["role"].ToString();
+                        frmchangepass pass = new frmchangepass(_repo, _repoRole, _repoBusiness, _repoCategory);
+                        pass.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        LoginInfo.IdAccount = Datos.Id;
+                        LoginInfo.IdUser = Datos.UserId;
+                        LoginInfo.IdRole = Datos.RoleId;
+                        LoginInfo.User = Datos.UserName;
+                        LoginInfo.Pass = Datos.UserPass;
+                        LoginInfo.Access = Datos?.Role?.RoleName;
 
                         frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness, _repoCategory); 
 
                         principal.Show();
                         this.Hide();
-                    //}
+                    }
                 }
             }
             catch (ApiBusinessException ex)

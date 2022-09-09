@@ -10,7 +10,7 @@ namespace BusnessEntities.BE
         public String UserId { get; set; }
         public String UserName { get; set; }
         public String UserPass { get; set; }
-        public bool confirm { get; set; }
+        public bool Confirm { get; set; }
 
         public RoleBE Role { get; set; }
         public UserBE User { get; set; }

@@ -345,7 +345,8 @@ namespace ApplicationView.Forms.Business
                                     new AccountBE()
                                     {
                                         UserName = txtusername.Text.Trim(),
-                                        UserPass = txtpassword.Text.Trim()
+                                        UserPass = txtpassword.Text.Trim(),
+                                        Confirm = false
                                     }
                                 }
                             }
@@ -358,7 +359,7 @@ namespace ApplicationView.Forms.Business
                         resp = _repo.Update(txtcode.Text.Trim(), be).ToString();
 
                     if (!string.IsNullOrEmpty(resp))
-                        MessageBox.Show(resp.Split('-')[0], "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(resp, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     this.Isnuevo = false;
                     this.IsEditar = false;

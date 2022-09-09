@@ -10,6 +10,7 @@ namespace DataModel.Entities
         public String UserId { get; set; }
         public String UserName { get; set; }
         public String UserPass { get; set; }
+        public Boolean Confirm { get; set; }
 
         public Role Role { get; set; }
         public User User { get; set; }

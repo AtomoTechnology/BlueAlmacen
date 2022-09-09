@@ -8,7 +8,7 @@ namespace DataModel.Repositories.IRepository
     public interface IAccountRepository
     {
         Account Login(string username, string userpass);
-        String ChangePaaword(string oldpass, string newpass);
+        String ChangePassword(Account entity);
         String UpdatePassword(string oldpass, Business business);
     }
 }

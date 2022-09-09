@@ -32,7 +32,14 @@ namespace DataService.FactoryPatern
                     RoleId = entity.RoleId,
                     UserId = entity.UserId,
                     UserName = entity.UserName,
+                    UserPass = PassValidation.GetInstance().Decrypt(entity.UserPass),
+                    Confirm = entity.Confirm
                 };
+                if (entity.Role != null)
+                {
+                    be.Role = new RoleBE();
+                    be.Role = RoleFactory.GetInstance().CreateBusiness(entity.Role);
+                }
                 return be;
             }
             return null;
@@ -54,6 +61,7 @@ namespace DataService.FactoryPatern
                     RoleId = be.RoleId,
                     UserId = be.UserId,
                     UserName = be.UserName,
+                    Confirm = be.Confirm,
                     UserPass = be.UserPass != null ? PassValidation.GetInstance().Encypt(be.UserPass) : null,
                 };
 

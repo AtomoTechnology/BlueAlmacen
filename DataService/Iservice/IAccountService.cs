@@ -8,7 +8,7 @@ namespace DataService.Iservice
     public interface IAccountService
     {
         AccountBE Login(string username, string userpass);
-        String ChangePaaword(string oldpass, string newpass);
+        String ChangePassword(AccountBE be);
         String UpdatePassword(string oldpass, AccountBE business);
     }
 }

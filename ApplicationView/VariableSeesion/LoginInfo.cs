@@ -6,11 +6,13 @@ namespace ApplicationView.VariableSeesion
 {
     public static class LoginInfo
     {
-        public static string idAccount;
-        public static string idbusiness;
-        public static string usuario;
-        public static string access;
-        public static string pass;
+        public static string IdAccount;
+        public static string IdUser;
+        public static string IdRole;
+        public static string User;
+        public static string Role;
+        public static string Access;
+        public static string Pass;
         public static Int32 pagesize = 2;
         public static Decimal pageamount = 0;
         public static Decimal page = 0;

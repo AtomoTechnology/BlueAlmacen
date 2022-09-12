@@ -16,6 +16,9 @@
     <Compile Update="Forms\Category\frmcategory.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\Provider\frmprovider.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\Roles\frmrole.cs">
       <SubType>Form</SubType>
     </Compile>

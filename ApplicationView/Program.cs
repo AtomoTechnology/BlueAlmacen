@@ -1,5 +1,6 @@
 using ApplicationView.Forms.Business;
 using ApplicationView.Forms.Category;
+using ApplicationView.Forms.Provider;
 using ApplicationView.Forms.Roles;
 using DataModel.Context;
 using DataModel.Repositories.IRepository;
@@ -42,17 +43,20 @@ namespace ApplicationView
                     services.AddScoped<frmrole>();
                     services.AddScoped<frmlogin>();
                     services.AddScoped<frmbusiness>();
-                    services.AddScoped<frmcategory>();
+                    services.AddScoped<frmcategory>(); 
+                    services.AddScoped<frmprovider>();
 
                     services.AddScoped<IRoleRepository, RoleRepository>();
                     services.AddScoped<IBusinessRepository, BusinessRepository>();
                     services.AddScoped<IAccountRepository, AccountRepository>();
                     services.AddScoped<ICategoryRepository, CategoryRepository>();
+                    services.AddScoped<IProviderRepository, ProviderRepository>();
 
                     services.AddScoped<IRoleService, RoleService>();
                     services.AddScoped<IBusnessService, BusnessService>();
                     services.AddScoped<IAccountService, AccountService>();
                     services.AddScoped<ICategoryService, CategoryService>();
+                    services.AddScoped<IProviderService, ProviderService>();
                 });
         }
     }

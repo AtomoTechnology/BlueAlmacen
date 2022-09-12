@@ -140,3 +140,4 @@ C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\Appli
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.pdb
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.genruntimeconfig.cache
 C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.Forms.Account.frmchangepass.resources
+C:\Empredimiento\BLUE\GestionStock\ApplicationView\obj\Debug\netcoreapp3.1\ApplicationView.Forms.Provider.frmprovider.resources

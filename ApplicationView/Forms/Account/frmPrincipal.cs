@@ -1,5 +1,6 @@
 ﻿using ApplicationView.Forms.Business;
 using ApplicationView.Forms.Category;
+using ApplicationView.Forms.Provider;
 using ApplicationView.Forms.Roles;
 using BusnessEntities.BE;
 using DataService.Iservice;
@@ -19,13 +20,16 @@ namespace ApplicationView.Forms.Account
         private readonly IRoleService _repo;
         private readonly IBusnessService _repoBusiness;
         private readonly ICategoryService _repoCategory;
-        public frmPrincipal(AccountBE be, IRoleService repo, IBusnessService repoBusiness, ICategoryService repoCategory)
+        private readonly IProviderService _repoProvider;
+        public frmPrincipal(AccountBE be, IRoleService repo, IBusnessService repoBusiness, ICategoryService repoCategory,
+            IProviderService repoProvider)
         {
             InitializeComponent();
             this._be = be;
             _repo = repo;
             _repoBusiness = repoBusiness;
             _repoCategory = repoCategory;
+            _repoProvider = repoProvider;
         }
 
         private void crearUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
@@ -53,6 +57,24 @@ namespace ApplicationView.Forms.Account
             frm.MdiParent = this;
             frm.Show();
             
+        }
+
+        private void proveedorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmprovider frm = new frmprovider(_repoProvider);
+            frm.MdiParent = this;
+            frm.Show();            
+        }
+
+        private void salirDelSistemaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.EnableVisualStyles();
+            var result = MessageBox.Show("Esta seguro que desees salir del sistema?", "Sistema de ventas",
+            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 }

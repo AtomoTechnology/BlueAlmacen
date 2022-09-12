@@ -21,13 +21,16 @@ namespace ApplicationView
         private readonly IRoleService _repoRole;
         private readonly IBusnessService _repoBusiness; 
         private readonly ICategoryService _repoCategory;
-        public frmlogin(IAccountService repo, IRoleService repoRole, IBusnessService repoBusiness, ICategoryService repoCategory)
+        private readonly IProviderService _repoProvider;
+        public frmlogin(IAccountService repo, IRoleService repoRole, IBusnessService repoBusiness, ICategoryService repoCategory,
+            IProviderService repoProvider)
         {
             InitializeComponent();
             _repo = repo;
             _repoRole = repoRole;
             _repoBusiness = repoBusiness;
             _repoCategory = repoCategory;
+            _repoProvider = repoProvider;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -47,7 +50,6 @@ namespace ApplicationView
                 if (frmlog.GetType() == typeof(frmPrincipal))
                 {
                     frmlog.Close();
-                    Application.Restart();
                     break;
                 }
                 else
@@ -90,7 +92,7 @@ namespace ApplicationView
                         LoginInfo.Pass = Datos.UserPass;
                         LoginInfo.Access = Datos?.Role?.RoleName;
 
-                        frmchangepass pass = new frmchangepass(_repo, _repoRole, _repoBusiness, _repoCategory);
+                        frmchangepass pass = new frmchangepass(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider);
                         pass.Show();
                         this.Hide();
                     }
@@ -103,7 +105,7 @@ namespace ApplicationView
                         LoginInfo.Pass = Datos.UserPass;
                         LoginInfo.Access = Datos?.Role?.RoleName;
 
-                        frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness, _repoCategory); 
+                        frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness, _repoCategory, _repoProvider); 
 
                         principal.Show();
                         this.Hide();

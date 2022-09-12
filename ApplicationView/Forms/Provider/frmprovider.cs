@@ -2,6 +2,7 @@
 using ApplicationView.VariableSeesion;
 using BusnessEntities.BE;
 using DataService.Iservice;
+using Resolver.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,34 +11,106 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ApplicationView.Forms.Category
+namespace ApplicationView.Forms.Provider
 {
-    public partial class frmcategory : Form
+    public partial class frmprovider : Form
     {
-        private readonly ICategoryService _repo;
+        private readonly IProviderService _repo;
         private bool Isnuevo = false;
         private bool IsEditar = false;
         int count = 0;
-        public frmcategory(ICategoryService repo)
+        public frmprovider(IProviderService repo)
         {
             InitializeComponent();
             _repo = repo;
         }
         private void LoadList()
         {
-
             this.dataList.DataSource = _repo.GetAll(1, 1, 12, "Id", "asc", "", ref count);
             this.HideColumn();
             this.GetPagination();
         }
+
+        private void frmprovider_Load(object sender, EventArgs e)
+        {
+            this.LoadList();
+            if (count == 0)
+            {
+                this.tabControl1.SelectedIndex = 1;
+                this.Habilitar(false);
+                this.Botones();
+                this.btnedit.Enabled = false;
+            }
+            else
+            {
+                this.Habilitar(false);
+                this.Botones();
+                this.btnedit.Enabled = false;
+            }
+        }
         private void HideColumn()
         {
             this.dataList.Columns["ckdelete"].Visible = false;
-            this.dataList.Columns["AccountId"].Visible = false;
+            this.dataList.Columns["FinalDate"].Visible = false;
+            this.dataList.Columns["CreatedDate"].Visible = false;
             this.dataList.Columns["State"].Visible = false;
             this.dataList.Columns["Account"].Visible = false;
-            this.dataList.Columns["FinalDate"].Visible = false;
+            this.dataList.Columns["AccountId"].Visible = false;
         }
+
+        private void CleanBox()
+        {
+            this.txtprovidername.Text = string.Empty;
+            this.txtaddress.Text = string.Empty;
+            this.txtcode.Text = string.Empty;
+            this.txtcuit_cuil.Text = string.Empty;
+            this.txtphone.Text = string.Empty;;
+
+            this.btnsave.Text = "Guardar";
+        }
+
+        private void Habilitar(bool valor)
+        {
+            this.txtprovidername.ReadOnly = !valor;
+            this.txtaddress.ReadOnly = !valor;
+            this.txtcode.ReadOnly = !valor;
+            this.txtcuit_cuil.ReadOnly = !valor;
+            this.txtphone.ReadOnly = !valor;
+        }
+
+        private void Botones()
+        {
+            if (this.Isnuevo || this.IsEditar)
+            {
+                this.Habilitar(true);
+                this.btnnew.Enabled = false;
+                this.btnsave.Enabled = true;
+                this.btnedit.Enabled = false;
+                this.btncancel.Enabled = true;
+            }
+            else
+            {
+                this.Habilitar(false);
+                this.btnnew.Enabled = true;
+                this.btnsave.Enabled = false;
+                this.btnedit.Enabled = true;
+                this.btncancel.Enabled = false;
+            }
+        }
+        private void SearchByName()
+        {
+            if (!this.txtsearch.Text.Trim().Equals(""))
+            {
+                this.dataList.DataSource = _repo.GetAll(1, 1, 12, "Id", "asc", this.txtsearch.Text.Trim(), ref count);
+                this.GetPagination();
+            }
+            else
+                this.LoadList();
+
+            this.HideColumn();
+            lblTotal.Text = Convert.ToString(count);
+        }
+
         private void GetPagination()
         {
             if (count > 0)
@@ -72,73 +145,65 @@ namespace ApplicationView.Forms.Category
                 this.lblTotal.Text = (0).ToString();
             }
         }
-        private void SearchByName()
-        {
-            if (!this.txtsearch.Text.Trim().Equals(""))
-            {
-                this.dataList.DataSource = _repo.GetAll(1, 1, 12, "Id", "asc", this.txtsearch.Text.Trim(), ref count);
-                this.GetPagination();
-            }
-            else
-                this.LoadList();
 
-            this.HideColumn();
-            lblTotal.Text = Convert.ToString(count);
-        }
-        private void frmcategory_Load(object sender, EventArgs e)
+        private void btnnew_Click(object sender, EventArgs e)
         {
-            this.LoadList();
-            if (count == 0)
+            this.Isnuevo = true;
+            this.IsEditar = false;
+            this.Botones();
+            this.CleanBox();
+            this.Habilitar(true);
+            this.txtprovidername.Focus();
+        }
+
+        private void btncancel_Click(object sender, EventArgs e)
+        {
+            this.Isnuevo = false;
+            this.IsEditar = false;
+            this.Botones();
+            this.CleanBox();
+            this.Habilitar(false);
+            this.btnedit.Enabled = false;
+        }
+
+        private void btnedit_Click(object sender, EventArgs e)
+        {
+            if (!this.txtcode.Text.Equals(""))
             {
-                this.tabControl1.SelectedIndex = 1;
-                this.Habilitar(false);
+                this.Isnuevo = false;
+                this.IsEditar = true;
                 this.Botones();
-                this.btnedit.Enabled = false;
-            }
-            else
-            {
-                this.Habilitar(false);
-                this.Botones();
-                this.btnedit.Enabled = false;
-            }
-        }
-        private void CleanBox()
-        {
-            this.txtcategoryname.Text = string.Empty;
-            this.txtdescription.Text = string.Empty;
-            this.txtcode.Text = string.Empty;
-            this.btnsave.Text = "Guardar";
-        }
-
-        private void Habilitar(bool valor)
-        {
-            this.txtcategoryname.ReadOnly = !valor;
-            this.txtcategoryname.ReadOnly = !valor;
-        }
-
-        private void Botones()
-        {
-            if (this.Isnuevo || this.IsEditar)
-            {
                 this.Habilitar(true);
-                this.btnnew.Enabled = false;
-                this.btnsave.Enabled = true;
-                this.btnedit.Enabled = false;
-                this.btncancel.Enabled = true;
             }
             else
             {
-                this.Habilitar(false);
-                this.btnnew.Enabled = true;
-                this.btnsave.Enabled = false;
-                this.btnedit.Enabled = true;
-                this.btncancel.Enabled = false;
+                MessageBox.Show("Debe de seleccionar primero el registro a Modificar", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.tabControl1.SelectedIndex = 0;
             }
         }
 
         private void btnsearch_Click(object sender, EventArgs e)
         {
             this.SearchByName();
+        }
+
+        private void chkEliminar_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkEliminar.Checked)
+            {
+                this.dataList.Columns[0].Visible = true;
+            }
+            else
+            {
+                foreach (DataGridViewRow row in dataList.Rows)
+                {
+                    if (Convert.ToBoolean(row.Cells[0].Value))
+                    {
+                        row.Cells[0].Value = false;
+                    }
+                }
+                this.dataList.Columns[0].Visible = false;
+            }
         }
 
         private void btndelete_Click(object sender, EventArgs e)
@@ -168,7 +233,7 @@ namespace ApplicationView.Forms.Category
                         {
                             if (Convert.ToBoolean(row.Cells[0].Value))
                             {
-                                Codigo = Convert.ToString(row.Cells[3].Value);
+                                Codigo = Convert.ToString(row.Cells[5].Value);
                                 resp = _repo.Delete(Codigo);
 
                                 if (!string.IsNullOrEmpty(resp))
@@ -204,40 +269,31 @@ namespace ApplicationView.Forms.Category
             }
         }
 
-        private void btncancel_Click(object sender, EventArgs e)
+        private void dataList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            this.Isnuevo = false;
-            this.IsEditar = false;
-            this.Botones();
-            this.CleanBox();
+            if (e.ColumnIndex == dataList.Columns["ckdelete"].Index)
+            {
+                DataGridViewCheckBoxCell ChkEliminar = (DataGridViewCheckBoxCell)dataList.Rows[e.RowIndex].Cells["ckdelete"];
+                ChkEliminar.Value = !Convert.ToBoolean(ChkEliminar.Value);
+            }
+        }
+
+        private void dataList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var selectedRow = this.dataList.SelectedRows[0];
+            var provider = (ProviderBE)selectedRow.DataBoundItem;
+            this.txtcode.Text = provider.Id;
+            this.txtprovidername.Text = provider.Name;
+            this.txtcuit_cuil.Text = provider.Cuit_Cuil;
+            this.txtaddress.Text = provider.Address;
+            this.txtphone.Text = provider.Phone;
+
             this.Habilitar(false);
-            this.btnedit.Enabled = false;
-        }
-
-        private void btnedit_Click(object sender, EventArgs e)
-        {
-            if (!this.txtcode.Text.Equals(""))
-            {
-                this.Isnuevo = false;
-                this.IsEditar = true;
-                this.Botones();
-                this.Habilitar(true);
-            }
-            else
-            {
-                MessageBox.Show("Debe de seleccionar primero el registro a Modificar", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.tabControl1.SelectedIndex = 0;
-            }
-        }
-
-        private void btnnew_Click(object sender, EventArgs e)
-        {
-            this.Isnuevo = true;
-            this.IsEditar = false;
-            this.Botones();
-            this.CleanBox();
-            this.Habilitar(true);
-            this.txtcategoryname.Focus();
+            this.btnedit.Enabled = true;
+            this.btnsave.Enabled = false;
+            this.btnnew.Enabled = false;
+            this.btnsave.Text = "Modificar";
+            this.tabControl1.SelectedIndex = 1;
         }
 
         private void btnsave_Click(object sender, EventArgs e)
@@ -245,19 +301,23 @@ namespace ApplicationView.Forms.Category
             try
             {
                 String resp = "";
-                if (txtcategoryname.Text.Trim().Equals(""))
+                if (txtprovidername.Text.Trim().Equals(""))
                 {
-                    MessageBox.Show("Debe ingresar  el nombre de la categoria", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtrol.Text = String.Empty;
-                    txtrol.Focus();
-                }
+                    MessageBox.Show("Debe ingresar  el nombre del proveedor", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtprovidername.Text = String.Empty;
+                    txtprovidername.Focus();
+                }  
                 else
                 {
-                    CategoryBE be = new CategoryBE()
+                    ProviderBE be = new ProviderBE()
                     {
-                        CategoryName = txtcategoryname.Text.Trim(),
-                        Description = txtdescription.Text.Trim(),
-                        AccountId = LoginInfo.IdAccount
+                        Name = txtprovidername.Text.Trim(),
+                        Address = txtaddress.Text.Trim(),
+                        Cuit_Cuil = txtcuit_cuil.Text.Trim(),
+                        Phone = txtphone.Text.Trim(),
+                        state = (Int32)StateEnum.Activeted,
+                        CreatedDate = DateTime.Now,
+                        AccountId = LoginInfo.IdAccount                        
                     };
 
                     if (Isnuevo)
@@ -282,48 +342,6 @@ namespace ApplicationView.Forms.Category
             {
                 MessageBox.Show(ex.Message, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void chkEliminar_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkEliminar.Checked)
-            {
-                this.dataList.Columns[0].Visible = true;
-            }
-            else
-            {
-                foreach (DataGridViewRow row in dataList.Rows)
-                {
-                    if (Convert.ToBoolean(row.Cells[0].Value))
-                    {
-                        row.Cells[0].Value = false;
-                    }
-                }
-                this.dataList.Columns[0].Visible = false;
-            }
-        }
-
-        private void dataList_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == dataList.Columns["ckdelete"].Index)
-            {
-                DataGridViewCheckBoxCell ChkEliminar = (DataGridViewCheckBoxCell)dataList.Rows[e.RowIndex].Cells["ckdelete"];
-                ChkEliminar.Value = !Convert.ToBoolean(ChkEliminar.Value);
-            }
-        }
-
-        private void dataList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            this.txtcode.Text = Convert.ToString(this.dataList.CurrentRow.Cells[5].Value);
-            this.txtcategoryname.Text = Convert.ToString(this.dataList.CurrentRow.Cells[2].Value);
-            this.txtdescription.Text = Convert.ToString(this.dataList.CurrentRow.Cells[3].Value);
-
-            this.Habilitar(false);
-            this.btnedit.Enabled = true;
-            this.btnsave.Enabled = false;
-            this.btnnew.Enabled = false;
-            this.btnsave.Text = "Modificar";
-            this.tabControl1.SelectedIndex = 1;
         }
     }
 }

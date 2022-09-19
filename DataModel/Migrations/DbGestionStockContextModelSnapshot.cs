@@ -189,11 +189,17 @@ namespace DataModel.Migrations
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProviderId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("SalePrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
 
                     b.Property<int>("state")
                         .HasColumnType("int");
@@ -203,6 +209,8 @@ namespace DataModel.Migrations
                     b.HasIndex("AccountId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ProviderId");
 
                     b.ToTable("Products");
                 });
@@ -275,6 +283,82 @@ namespace DataModel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("DataModel.Entities.Sale", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FinalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SaleType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("finalizeSale")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("state")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaymentTypeId");
+
+                    b.ToTable("Sale");
+                });
+
+            modelBuilder.Entity("DataModel.Entities.SaleDetail", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FinalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SaleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("productId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("state")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("SaleId");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("SaleDetail");
                 });
 
             modelBuilder.Entity("DataModel.Entities.User", b =>
@@ -362,6 +446,10 @@ namespace DataModel.Migrations
                     b.HasOne("DataModel.Entities.Category", "Categories")
                         .WithMany()
                         .HasForeignKey("CategoryId");
+
+                    b.HasOne("DataModel.Entities.Provider", "Provider")
+                        .WithMany()
+                        .HasForeignKey("ProviderId");
                 });
 
             modelBuilder.Entity("DataModel.Entities.Provider", b =>
@@ -371,6 +459,28 @@ namespace DataModel.Migrations
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DataModel.Entities.Sale", b =>
+                {
+                    b.HasOne("DataModel.Entities.PaymentType", "PaymentType")
+                        .WithMany("Sale")
+                        .HasForeignKey("PaymentTypeId");
+                });
+
+            modelBuilder.Entity("DataModel.Entities.SaleDetail", b =>
+                {
+                    b.HasOne("DataModel.Entities.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("DataModel.Entities.Sale", null)
+                        .WithMany("SaleDetail")
+                        .HasForeignKey("SaleId");
+
+                    b.HasOne("DataModel.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("productId");
                 });
 
             modelBuilder.Entity("DataModel.Entities.User", b =>

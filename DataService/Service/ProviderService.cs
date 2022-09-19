@@ -16,11 +16,11 @@ namespace DataService.Service
         {
             _repo = repo;
         }
-        public string Create(ProviderBE role)
+        public string Create(ProviderBE provider)
         {
             try
             {
-                var result = ProviderFactory.GetInstance().CreateEntity(role);
+                var result = ProviderFactory.GetInstance().CreateEntity(provider);
                 var entity = _repo.Create(result);
                 return entity;
             }
@@ -74,11 +74,11 @@ namespace DataService.Service
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
         }
-        public string Update(string id, ProviderBE role)
+        public string Update(string id, ProviderBE provider)
         {
             try
             {
-                var result = ProviderFactory.GetInstance().CreateEntity(role);
+                var result = ProviderFactory.GetInstance().CreateEntity(provider);
                 var entities = _repo.Update(id, result);
                 return entities;
             }

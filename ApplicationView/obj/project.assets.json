@@ -7409,6 +7409,7 @@
       "EntityFramework >= 6.4.4",
       "Microsoft.AspNetCore >= 2.2.0",
       "Microsoft.AspNetCore.Hosting >= 2.2.7",
+      "Microsoft.AspNetCore.Hosting.Abstractions >= 2.2.0",
       "Microsoft.AspNetCore.Http.Abstractions >= 2.2.0",
       "Microsoft.Extensions.DependencyInjection.Abstractions >= 5.0.0",
       "Microsoft.Extensions.Hosting >= 5.0.0",
@@ -7478,6 +7479,10 @@
           "Microsoft.AspNetCore.Hosting": {
             "target": "Package",
             "version": "[2.2.7, )"
+          },
+          "Microsoft.AspNetCore.Hosting.Abstractions": {
+            "target": "Package",
+            "version": "[2.2.0, )"
           },
           "Microsoft.AspNetCore.Http.Abstractions": {
             "target": "Package",

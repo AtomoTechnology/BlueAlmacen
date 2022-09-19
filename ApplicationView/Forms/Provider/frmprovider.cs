@@ -233,7 +233,8 @@ namespace ApplicationView.Forms.Provider
                         {
                             if (Convert.ToBoolean(row.Cells[0].Value))
                             {
-                                Codigo = Convert.ToString(row.Cells[5].Value);
+                                var provider = (ProviderBE)row.DataBoundItem;
+                                Codigo = provider.Id;
                                 resp = _repo.Delete(Codigo);
 
                                 if (!string.IsNullOrEmpty(resp))
@@ -342,6 +343,30 @@ namespace ApplicationView.Forms.Provider
             {
                 MessageBox.Show(ex.Message, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            ShareMethod.GetInstance().goFirst();
+            LoadList();
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            ShareMethod.GetInstance().goPrevious();
+            LoadList();
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            ShareMethod.GetInstance().goNext();
+            LoadList();
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            ShareMethod.GetInstance().goLast(this.count);
+            LoadList();
         }
     }
 }

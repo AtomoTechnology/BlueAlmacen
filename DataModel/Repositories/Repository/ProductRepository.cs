@@ -29,9 +29,9 @@ namespace DataModel.Repositories.Repository
                     throw new ApiBusinessException("6000", "Debe ingresar el nombre del producto", System.Net.HttpStatusCode.NotFound, "Http");
                 if (String.IsNullOrEmpty(product.ProductCode))
                     throw new ApiBusinessException("6000", "Debe ingresar el código del producto", System.Net.HttpStatusCode.NotFound, "Http");
-                if (product.PurchasePrice > 0)
+                if (product.PurchasePrice <= 0)
                     throw new ApiBusinessException("6000", "Debe ingresar el precio de compra del producto", System.Net.HttpStatusCode.NotFound, "Http");
-                if (product.SalePrice > 0)
+                if (product.SalePrice <= 0)
                     throw new ApiBusinessException("6000", "Debe ingresar el precio de venta", System.Net.HttpStatusCode.NotFound, "Http");
 
                 product.Id = Guid.NewGuid().ToString();
@@ -41,7 +41,7 @@ namespace DataModel.Repositories.Repository
 
                 _context.Add(product);
                 _context.SaveChanges();
-                return "La forma de pago fue guardado con exito";
+                return "El producto fue guardado con exito";
             }
             catch (Exception ex)
             {
@@ -101,6 +101,24 @@ namespace DataModel.Repositories.Repository
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
         }
+
+        public Product SearchProducByCode(string codeRef)
+        {
+            try
+            {
+                var result = _context.Products.SingleOrDefault(u => u.ProductCode == codeRef && u.state == (Int32)StateEnum.Activeted && u.FinalDate == null);
+                if (result == null)
+                    throw new ApiBusinessException("3000", "NO existe producto para ese codigo", System.Net.HttpStatusCode.NotFound, "Http");
+                if (result.Stock == 0)
+                    throw new ApiBusinessException("3000", "Productto sin stock", System.Net.HttpStatusCode.NotFound, "Http");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
+        }
+
         public string Update(string id, Product product)
         {
             try
@@ -114,6 +132,8 @@ namespace DataModel.Repositories.Repository
                 entity.PurchasePrice = product.PurchasePrice;
                 entity.SalePrice = product.SalePrice;
                 entity.CategoryId = product.CategoryId;
+                entity.ProviderId = product.ProviderId;
+                entity.Stock = product.Stock;
                 entity.ExpirationDate = product.ExpirationDate;
                 entity.ProductCode = product.ProductCode;
 

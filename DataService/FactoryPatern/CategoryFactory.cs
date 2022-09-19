@@ -28,6 +28,7 @@ namespace DataService.FactoryPatern
                     FinalDate = entity.FinalDate,
                     CreatedDate = entity.CreatedDate,
                     state = entity.state,
+                    AccountId = entity.AccountId,
                     CategoryName = entity.CategoryName,
                     Description = entity.Description,
                 };
@@ -49,6 +50,7 @@ namespace DataService.FactoryPatern
                     FinalDate = be.FinalDate,
                     CreatedDate = be.CreatedDate,
                     state = be.state,
+                    AccountId = be.AccountId,
                     CategoryName = be.CategoryName,
                     Description = be.Description,
                 };

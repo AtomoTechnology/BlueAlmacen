@@ -455,6 +455,7 @@
             this.btnNext.TabIndex = 3;
             this.btnNext.Text = ">";
             this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // btnLast
             // 
@@ -464,6 +465,7 @@
             this.btnLast.TabIndex = 2;
             this.btnLast.Text = ">|";
             this.btnLast.UseVisualStyleBackColor = true;
+            this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
             // 
             // btnPrevious
             // 
@@ -473,6 +475,7 @@
             this.btnPrevious.TabIndex = 1;
             this.btnPrevious.Text = "<";
             this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
             // btnFirst
             // 
@@ -482,6 +485,7 @@
             this.btnFirst.TabIndex = 0;
             this.btnFirst.Text = "|<";
             this.btnFirst.UseVisualStyleBackColor = true;
+            this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
             // 
             // frmprovider
             // 

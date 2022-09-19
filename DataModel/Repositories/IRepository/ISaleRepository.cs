@@ -9,8 +9,8 @@ namespace DataModel.Repositories.IRepository
     {
         List<Sale> GetAll(int state, int page, int top, string orderBy, string ascending, string name, ref int count);
         Sale GetById(string id);
-        String Create(Sale product);
-        String Update(string id, Sale product);
+        String Create(Sale sale);
+        String Update(string id, Sale sale);
         String Delete(string id);
     }
 }

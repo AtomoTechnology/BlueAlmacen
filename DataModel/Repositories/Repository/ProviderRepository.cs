@@ -110,7 +110,7 @@ namespace DataModel.Repositories.Repository
 
                 _context.SaveChanges();
 
-                return "El provider fue modificado con exito!";
+                return "El proveedor fue modificado con exito!";
             }
             catch (Exception ex)
             {

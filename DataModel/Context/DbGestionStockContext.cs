@@ -9,10 +9,10 @@ namespace DataModel.Context
 {
     public partial class DbGestionStockContext : DbContext
     {
-        public DbGestionStockContext() : base()
+        public DbGestionStockContext(DbContextOptions<DbGestionStockContext> options) : base(options)
         {
         }
-        public DbGestionStockContext(DbContextOptions<DbGestionStockContext> options) : base(options)
+        public DbGestionStockContext() : base()
         {
         }
 
@@ -25,7 +25,9 @@ namespace DataModel.Context
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-
+        public DbSet<Sale> Sale { get; set; }
+        public DbSet<SaleDetail> SaleDetail { get; set; }
+        public DbSet<IncreasePriceAfterTwelve> IncreasePriceAfterTwelve { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -33,8 +35,7 @@ namespace DataModel.Context
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.
-               UseSqlServer("data source=DESKTOP-KOS4DK0\\PRADE;initial catalog=bluedbventa_db;user id=sa;password=516euge94324590;MultipleActiveResultSets=True;")
-               .EnableSensitiveDataLogging(true);
+               UseSqlServer("data source=DESKTOP-KOS4DK0\\PRADE;initial catalog=bluedbventa_db;user id=sa;password=516euge94324590;MultipleActiveResultSets=True;");
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -59,6 +60,9 @@ namespace DataModel.Context
             new ProviderConfiguration(modelBuilder.Entity<Provider>());
             new UserConfiguration(modelBuilder.Entity<User>());
             new RoleConfiguration(modelBuilder.Entity<Role>());
+            new PaymentTypeConfiguration(modelBuilder.Entity<PaymentType>());
+            new CategoryConfiguration(modelBuilder.Entity<Category>());
+            new IncreasePriceAfterTwelveConfiguration(modelBuilder.Entity<IncreasePriceAfterTwelve>());
         }
     }
 }

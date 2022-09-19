@@ -220,9 +220,9 @@
             // 
             // txtsearch
             // 
-            this.txtsearch.Location = new System.Drawing.Point(63, 16);
+            this.txtsearch.Location = new System.Drawing.Point(91, 21);
             this.txtsearch.Name = "txtsearch";
-            this.txtsearch.Size = new System.Drawing.Size(344, 27);
+            this.txtsearch.Size = new System.Drawing.Size(316, 27);
             this.txtsearch.TabIndex = 2;
             // 
             // label1

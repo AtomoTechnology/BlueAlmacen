@@ -17,5 +17,6 @@ namespace DataModel.Entities
 
         public List<Provider> Providers { get; set; }
         public List<Category> Categories { get; set; }
+        public List<IncreasePriceAfterTwelve> IncreasePriceAfterTwelve { get; set; }
     }
 }

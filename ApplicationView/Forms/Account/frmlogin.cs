@@ -22,8 +22,11 @@ namespace ApplicationView
         private readonly IBusnessService _repoBusiness; 
         private readonly ICategoryService _repoCategory;
         private readonly IProviderService _repoProvider;
+        private readonly IProductService _repoProduct;
+        private readonly ISaleService _repoSale;
+        private readonly ISaleDetailService _repoSaleDetail;
         public frmlogin(IAccountService repo, IRoleService repoRole, IBusnessService repoBusiness, ICategoryService repoCategory,
-            IProviderService repoProvider)
+            IProviderService repoProvider, IProductService repoProduct, ISaleService repoSale, ISaleDetailService repoSaleDetail)
         {
             InitializeComponent();
             _repo = repo;
@@ -31,6 +34,9 @@ namespace ApplicationView
             _repoBusiness = repoBusiness;
             _repoCategory = repoCategory;
             _repoProvider = repoProvider;
+            _repoProduct = repoProduct;
+            _repoSale = repoSale;
+            _repoSaleDetail = repoSaleDetail;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -92,7 +98,7 @@ namespace ApplicationView
                         LoginInfo.Pass = Datos.UserPass;
                         LoginInfo.Access = Datos?.Role?.RoleName;
 
-                        frmchangepass pass = new frmchangepass(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider);
+                        frmchangepass pass = new frmchangepass(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail);
                         pass.Show();
                         this.Hide();
                     }
@@ -105,7 +111,7 @@ namespace ApplicationView
                         LoginInfo.Pass = Datos.UserPass;
                         LoginInfo.Access = Datos?.Role?.RoleName;
 
-                        frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness, _repoCategory, _repoProvider); 
+                        frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail); 
 
                         principal.Show();
                         this.Hide();

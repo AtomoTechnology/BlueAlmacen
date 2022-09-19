@@ -1,7 +1,9 @@
 ﻿using ApplicationView.Forms.Business;
 using ApplicationView.Forms.Category;
+using ApplicationView.Forms.Product;
 using ApplicationView.Forms.Provider;
 using ApplicationView.Forms.Roles;
+using ApplicationView.Forms.Sale;
 using BusnessEntities.BE;
 using DataService.Iservice;
 using System;
@@ -21,8 +23,11 @@ namespace ApplicationView.Forms.Account
         private readonly IBusnessService _repoBusiness;
         private readonly ICategoryService _repoCategory;
         private readonly IProviderService _repoProvider;
+        private readonly IProductService _repoProduct;
+        private readonly ISaleService _repoSale;
+        private readonly ISaleDetailService _repoSaleDetail;
         public frmPrincipal(AccountBE be, IRoleService repo, IBusnessService repoBusiness, ICategoryService repoCategory,
-            IProviderService repoProvider)
+            IProviderService repoProvider, IProductService repoProduct, ISaleService repoSale, ISaleDetailService repoSaleDetail)
         {
             InitializeComponent();
             this._be = be;
@@ -30,6 +35,9 @@ namespace ApplicationView.Forms.Account
             _repoBusiness = repoBusiness;
             _repoCategory = repoCategory;
             _repoProvider = repoProvider;
+            _repoProduct = repoProduct;
+            _repoSale = repoSale;
+            _repoSaleDetail = repoSaleDetail;
         }
 
         private void crearUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,9 +80,22 @@ namespace ApplicationView.Forms.Account
             var result = MessageBox.Show("Esta seguro que desees salir del sistema?", "Sistema de ventas",
             MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
-            {
                 Application.Exit();
-            }
+        }
+
+        private void productosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmProduct frm = new frmProduct(_repoProduct, _repoCategory, _repoProvider);
+            frm.MdiParent = this;
+            frm.Show();            
+        }
+
+        private void produdosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmsale frm = new frmsale(_repoProduct, _repoSale, _repoSaleDetail);
+            frm.MdiParent = this;
+            frm.Show();
+
         }
     }
 }

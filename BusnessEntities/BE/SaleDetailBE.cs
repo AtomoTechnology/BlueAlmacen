@@ -10,8 +10,6 @@ namespace BusnessEntities.BE
         public String SaleId { get; set; }
         public decimal price { get; set; }
         public Int32 quantity { get; set; }
-
         public ProductBE Product { get; set; }
-        public AccountBE Account { get; set; }
     }
 }

@@ -12,8 +12,8 @@ namespace DataModel.Configuration
         {
             entityBuilder.HasKey(u => u.Id);
             entityBuilder.Property(u => u.AccountId).IsRequired();
-            entityBuilder.Property(u => u.DateFrom).IsRequired();
-            entityBuilder.Property(u => u.DateTo).IsRequired();
+            entityBuilder.Property(u => u.HourFrom).IsRequired();
+            entityBuilder.Property(u => u.HourTo).IsRequired();
             entityBuilder.Property(u => u.Porcent).IsRequired();
             entityBuilder.Property(u => u.IsActive).IsRequired();
         }

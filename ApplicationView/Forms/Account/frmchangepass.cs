@@ -18,8 +18,10 @@ namespace ApplicationView.Forms.Account
         private readonly IProductService _repoProduct;
         private readonly ISaleService _repoSale;
         private readonly ISaleDetailService _repoSaleDetail;
+        private readonly IIncreasePriceAfterTwelveService _repoIncrease;
         public frmchangepass(IAccountService repo, IRoleService repoRole, IBusnessService repoBusiness, ICategoryService repoCategory,
-            IProviderService repoProvider, IProductService repoProduct, ISaleService repoSale, ISaleDetailService repoSaleDetail)
+            IProviderService repoProvider, IProductService repoProduct, ISaleService repoSale, ISaleDetailService repoSaleDetail,
+            IIncreasePriceAfterTwelveService repoIncrease)
         {
             InitializeComponent();
             _repo = repo;
@@ -30,6 +32,7 @@ namespace ApplicationView.Forms.Account
             _repoProduct = repoProduct;
             _repoSale = repoSale;
             _repoSaleDetail = repoSaleDetail;
+            _repoIncrease = repoIncrease;
         }
 
         private void btnacept_Click(object sender, EventArgs e)
@@ -89,7 +92,7 @@ namespace ApplicationView.Forms.Account
                         frm.Close();
                     }
                     //Application.Restart();
-                    frmlogin frmlog = new frmlogin(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail);
+                    frmlogin frmlog = new frmlogin(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease);
                     this.Hide();
                     frmlog.ShowDialog();
                 }

@@ -31,7 +31,8 @@ namespace DataService.FactoryPatern
                     AccountId = entity.AccountId,
                     finalizeSale = entity.finalizeSale,
                     PaymentTypeId = entity.PaymentTypeId,
-                    Total = entity.Total
+                    Total = entity.Total,
+                    InvoiceCode = entity.InvoiceCode
                 };
                 if (entity.SaleDetail != null)
                 {
@@ -62,7 +63,8 @@ namespace DataService.FactoryPatern
                     AccountId = be.AccountId,
                     finalizeSale = be.finalizeSale,
                     PaymentTypeId = be.PaymentTypeId,
-                    Total = be.Total
+                    Total = be.Total,
+                    InvoiceCode= be.InvoiceCode
                 };
                 if (be.SaleDetail != null)
                 {

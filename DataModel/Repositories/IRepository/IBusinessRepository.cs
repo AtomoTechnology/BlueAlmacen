@@ -9,6 +9,7 @@ namespace DataModel.Repositories.IRepository
     {
         List<Business> GetAll(int state, int page, int top, string orderBy, string ascending, string name, ref int count);
         Business GetById(string id);
+        Business GetBusinessByUserId(string UserId);
         String Create(Business business);
         String Update(string id, Business business);
         String Delete(string id);

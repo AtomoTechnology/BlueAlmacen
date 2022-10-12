@@ -129,6 +129,19 @@ namespace DataModel.Repositories.Repository
             }
         }
 
+        public Business GetBusinessByUserId(string UserId)
+        {
+            try
+            {
+                var result = _context.Businesses.SingleOrDefault(u => u.Users.FirstOrDefault().Id == UserId && u.state == (Int32)StateEnum.Activeted);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
+        }
+
         public Business GetById(string id)
         {
             try

@@ -52,6 +52,7 @@ namespace DataService.Service
                             productId = item.productId,
                             ProductName = item.Product.ProductName,
                             quantity = item.quantity,
+                            InvoiceCode = item.Sale.InvoiceCode,
                             ProductCode = item.Product.ProductCode
                         });
                     }

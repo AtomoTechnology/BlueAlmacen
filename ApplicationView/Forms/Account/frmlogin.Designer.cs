@@ -90,6 +90,7 @@
             this.txtuserpass.PasswordChar = '*';
             this.txtuserpass.Size = new System.Drawing.Size(182, 27);
             this.txtuserpass.TabIndex = 3;
+            this.txtuserpass.Text = "sanlorenzo";
             // 
             // txtusername
             // 
@@ -98,6 +99,7 @@
             this.txtusername.Name = "txtusername";
             this.txtusername.Size = new System.Drawing.Size(182, 27);
             this.txtusername.TabIndex = 2;
+            this.txtusername.Text = "almacen";
             // 
             // label2
             // 
@@ -192,7 +194,6 @@
         #endregion
 
         internal System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.GroupBox groupBox1;
         internal System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtuserpass;
         private System.Windows.Forms.TextBox txtusername;
@@ -202,5 +203,6 @@
         private System.Windows.Forms.Button btncancel;
         internal System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnacept;
+        internal System.Windows.Forms.GroupBox groupBox1;
     }
 }

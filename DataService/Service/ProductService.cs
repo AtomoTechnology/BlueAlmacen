@@ -2,6 +2,7 @@
 using DataModel.Repositories.IRepository;
 using DataService.FactoryPatern;
 using DataService.Iservice;
+using Resolver.Enums;
 using Resolver.HelperError.Handlers;
 using System;
 using System.Collections.Generic;
@@ -95,6 +96,19 @@ namespace DataService.Service
             {
                 var result = ProductFactory.GetInstance().CreateEntity(product);
                 var entities = _repo.Update(id, result);
+                return entities;
+            }
+            catch (Exception ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
+        }
+
+        public string UpdatePrices(string id, string accountId, decimal porcent, UpdatePriceEnum priceenum, bool ispurchaseprice = false)
+        {
+            try
+            {
+                var entities = _repo.UpdatePrices(id, accountId, porcent, priceenum, ispurchaseprice);
                 return entities;
             }
             catch (Exception ex)

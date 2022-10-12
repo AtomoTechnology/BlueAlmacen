@@ -19,17 +19,28 @@ namespace ApplicationView.Forms.Sale
         private readonly IProductService _repoProduct;
         private readonly ISaleService _repo;
         private readonly ISaleDetailService _repoSaleDetail;
+        private readonly IIncreasePriceAfterTwelveService _repoIncrease;
+        private readonly IAccountService _repoAccount;
         decimal price = 0;
-        public frmsale(IProductService repoProduct, ISaleService repo, ISaleDetailService repoSaleDetail)
+        int count = 0;
+        String saleId = "";
+        public frmsale(IProductService repoProduct, ISaleService repo, ISaleDetailService repoSaleDetail, IIncreasePriceAfterTwelveService repoIncrease,
+            IAccountService repoAccount)
         {
             InitializeComponent();
             Shown += Frmsale_Shown;
             txtreadcode.Focus();
+            this.txtcajeroname.Text = LoginInfo.UserName;
+
             _repoProduct = repoProduct;
             _repo = repo;
-            _repoSaleDetail = repoSaleDetail; 
+            _repoSaleDetail = repoSaleDetail;
+            _repoIncrease = repoIncrease;
+            _repoAccount = repoAccount;
+
             this.HideColumn();
             this.SetGrid();
+            this.btnpay.Enabled = false;
 
         }
         private void HideColumn()
@@ -37,6 +48,8 @@ namespace ApplicationView.Forms.Sale
             this.dataList.Columns["Id"].Visible = false;
             this.dataList.Columns["productId"].Visible = false;
             this.dataList.Columns["SaleId"].Visible = false;
+            this.dataList.Columns["InvoiceCode"].Visible = false;
+            
         }
 
         private void SetGrid()
@@ -72,33 +85,40 @@ namespace ApplicationView.Forms.Sale
                 if (e.KeyChar == (char)Keys.Enter)
                 {
                     var result = _repoProduct.SearchProducByCode(txtreadcode.Text.Trim());
-
+                    if (result != null)
+                    {
+                        var incr = _repoIncrease.GetAll(1, 1, 12, "Id", "asc", DateTime.Now, DateTime.Now, LoginInfo.IdBusiness, ref count);
+                        if (incr.Count > 0){
+                            if (IsWithinTime(DateTime.Now.ToLongTimeString(), incr[0].HourFrom.ToLongTimeString(), incr[0].HourTo.ToLongTimeString(), incr[0].IsActive))
+                                result.SalePrice = result.SalePrice*(1 + (incr[0].Porcent/100));
+                        }
+                    }
                    
-                    string IdSale = "";
+                    //string IdSale = "";
                     if (dataList.Rows.Count == 0)
                     {
-                            var be = new SaleBE()
+                        var be = new SaleBE()
+                        {
+                            AccountId = LoginInfo.IdAccount,
+                            CreatedDate = DateTime.Now,
+                            PaymentTypeId = "f5f737fd-860c-485b-972a-927d385f4ab5",
+                            finalizeSale = false,
+                            Total = 0,
+                            state = (Int32)StateEnum.Activeted,
+                            SaleDetail = new List<SaleDetailBE>()
                             {
-                                AccountId = LoginInfo.IdAccount,
-                                CreatedDate = DateTime.Now,
-                                PaymentTypeId = "b8308592-5de6-49fa-a024-d017f27370e7",
-                                finalizeSale = false,
-                                Total = 0,
-                                state = (Int32)StateEnum.Activeted,
-                                SaleDetail = new List<SaleDetailBE>()
+                                new SaleDetailBE()
                                 {
-                                    new SaleDetailBE()
-                                    {
-                                        state = (Int32)StateEnum.Activeted,
-                                        CreatedDate = DateTime.Now,
-                                        price =  result.SalePrice,
-                                        productId = result.Id,
-                                        quantity = 1
-                                    }
+                                    state = (Int32)StateEnum.Activeted,
+                                    CreatedDate = DateTime.Now,
+                                    price =  result.SalePrice,
+                                    productId = result.Id,
+                                    quantity = 1
                                 }
-                            };
+                            }
+                        };
 
-                        IdSale = _repo.Create(be);
+                        this.saleId = _repo.Create(be);
                     }
                     else
                     {
@@ -112,9 +132,9 @@ namespace ApplicationView.Forms.Sale
                             quantity = 1,
                             SaleId = saleid.SaleId
                         };
-                        IdSale = _repoSaleDetail.Create(be);
+                        this.saleId = _repoSaleDetail.Create(be);
                     }
-                    var response = _repoSaleDetail.SearchAllDetailByCode(IdSale);
+                    var response = _repoSaleDetail.SearchAllDetailByCode(this.saleId);
                     txtreadcode.Text = String.Empty;
                     txtreadcode.Focus();
                     price = price + result.SalePrice;
@@ -123,15 +143,22 @@ namespace ApplicationView.Forms.Sale
                         this.dataList.DataSource = response;
                     this.productqquantity.Text = ((!string.IsNullOrEmpty(this.productqquantity.Text) ? Convert.ToInt32(this.productqquantity.Text) : 0) + 1).ToString();
                     this.lblStatus.Text = price.ToString();
-
+                    this.InvoiceCodeFormat(response[0].InvoiceCode);
 
                     this.dataList.FirstDisplayedScrollingRowIndex = (this.dataList.Rows.Count - 1);
+                    if (this.dataList.Rows.Count > 0)
+                    {
+                        this.HideColumn();
+                        this.SetGrid();
+                        this.btnpay.Enabled = true;
+                    }
                     this.dataList.ClearSelection();
                     this.dataList.CurrentCell = null;
                 }
             }
             catch (ApiBusinessException ex)
             {
+                txtreadcode.Text = String.Empty;
                 MessageBox.Show(ex.MessageError, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
@@ -140,9 +167,97 @@ namespace ApplicationView.Forms.Sale
             }
         }
 
+        private void InvoiceCodeFormat(Int64 InvoiceCode)
+        {
+            string fmt = "000-0000-00000";
+            this.nrofact.Text = InvoiceCode.ToString(fmt);
+        }
+        public bool IsWithinTime(string stringNowTime, string stringStartTime, string stringEndTime, bool isActive)
+        {
+
+            var nowTime = DateTime.Parse(stringNowTime);
+            var startTime = DateTime.Parse(stringStartTime);
+            var endTime = DateTime.Parse(stringEndTime);
+
+            if ((nowTime <= endTime) && (nowTime >= startTime) && isActive)
+            {
+                return true;
+            }
+
+            return false;
+        }
         private void frmsale_Load(object sender, EventArgs e)
         {
             txtreadcode.Focus();
+        }
+            
+        private void btnpay_Click(object sender, EventArgs e)
+        {
+            frmclosepay frm = new frmclosepay(_repo, this.lblStatus.Text, this.saleId);
+            frm.ShowDialog();
+            if (frm.iscorrectSale)
+            {
+                this.dataList.DataSource = new List<SaleDetailDto>();
+                this.lblStatus.Text = "";
+                this.productqquantity.Text = "";
+                this.nrofact.Text = "";
+                this.txtreadcode.Focus();
+            }
+        }
+
+        private void dataList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var selectedRow = this.dataList.SelectedRows[0];
+            var sale = (SaleDetailDto)selectedRow.DataBoundItem;
+            frmautorizedeleteproductsale frm = new frmautorizedeleteproductsale(_repoAccount, sale.Id, _repo);
+            frm.ShowDialog();
+            if (frm.isdeleteAdmin)
+            {
+                var response = _repoSaleDetail.SearchAllDetailByCode(this.saleId);
+                txtreadcode.Text = String.Empty;
+                txtreadcode.Focus();
+                price = price - sale.SalePrice;
+
+                if (response != null)
+                    this.dataList.DataSource = response;
+                if (response.Count > 0)
+                {
+                    this.productqquantity.Text = Convert.ToInt32(dataList.RowCount).ToString();
+                    this.lblStatus.Text = price.ToString();
+                    this.InvoiceCodeFormat(response[0].InvoiceCode);
+                }
+                else
+                {
+                    this.productqquantity.Text = "";
+                    this.lblStatus.Text = "";
+                    this.nrofact.Text = "";
+                }
+                
+            }
+        }
+
+        private void frmsale_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!this.saleId.Equals(""))
+            {
+                var statesale = _repo.GetById(this.saleId);
+                if (statesale != null)
+                {
+                    if (!statesale.finalizeSale)
+                    {
+                        Application.EnableVisualStyles();
+                        var result = MessageBox.Show("Esta venta esta abierta sin cobrar,se eliminar la venta al confirmarla.\n Esta seguro que desees salir la venta?", "Sistema de ventas",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
+                        {
+                            _repo.RemoveNoneSale(this.saleId, LoginInfo.IdAccount, DeleteSaleEnum.CloseScreen);
+                            this.Close();
+                        }
+                        else
+                            e.Cancel = true;
+                    }
+                }
+            }
         }
     }
 }

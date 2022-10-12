@@ -61,6 +61,20 @@ namespace DataService.Service
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
         }
+
+        public BusinessBE GetBusinessByUserId(string UserId)
+        {
+            try
+            {
+                var entities = _repo.GetBusinessByUserId(UserId);
+                return BusinessFactory.GetInstance().CreateBusiness(entities);
+            }
+            catch (Exception ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
+        }
+
         public BusinessBE GetById(string id)
         {
             try

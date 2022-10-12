@@ -35,7 +35,7 @@ namespace DataModel.Repositories.Repository
 
                 _context.Add(role);
                 _context.SaveChanges();
-                return "El rol fue guardaddo con exito";
+                return "El rol fue guardado con exito";
             }
             catch (Exception ex)
             {

@@ -66,8 +66,10 @@ namespace ApplicationView.Forms.Product
             this.dataList.Columns["AccountId"].Visible = false;
             this.dataList.Columns["Categories"].Visible = false;
             this.dataList.Columns["CategoryId"].Visible = false; 
-            this.dataList.Columns["ExpirationDate"].Visible = false; 
+            //this.dataList.Columns["ExpirationDate"].Visible = false; 
             this.dataList.Columns["Description"].Visible = false;
+            this.dataList.Columns["ModifiedDate"].Visible = false;
+            this.dataList.Columns["ProviderId"].Visible = false;
         }
 
         private void CleanBox()
@@ -83,6 +85,8 @@ namespace ApplicationView.Forms.Product
             this.txtproductname.Text = string.Empty;
             this.txtcatproductId.Text = string.Empty;
             this.txtprovproductId.Text = string.Empty;
+            this.txtlot.Text = string.Empty;
+            this.txtstock.Text = string.Empty;
 
             this.btnsave.Text = "Guardar";
         }
@@ -95,6 +99,8 @@ namespace ApplicationView.Forms.Product
             this.txtproductcode.ReadOnly = !valor;
             this.txtSalePrice.ReadOnly = !valor;
             this.txtdescription.ReadOnly = !valor;
+            this.txtlot.ReadOnly = !valor;
+            this.txtstock.ReadOnly = !valor;
             this.btncategory.Enabled = valor;
             this.btnprovider.Enabled = valor;
             this.dtTP.Enabled = valor;
@@ -300,6 +306,11 @@ namespace ApplicationView.Forms.Product
                     txtproductname.Text = String.Empty;
                     txtproductname.Focus();
                 }
+                else if (txtlot.Text.Trim().Equals(""))
+                {
+                    MessageBox.Show("Debe ingresar  el lote del producto", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtproductcode.Text = String.Empty;
+                }
                 else if (txtproductcode.Text.Trim().Equals(""))
                 {
                     MessageBox.Show("Debe ingresar  el codigo del producto", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -362,7 +373,15 @@ namespace ApplicationView.Forms.Product
                         Stock = Convert.ToInt32(txtstock.Text),
                         PurchasePrice = Convert.ToDecimal(txtPurchasePrice.Text),
                         SalePrice = Convert.ToDecimal(txtSalePrice.Text),
-                        ExpirationDate = dtTP.Value
+                        Lots = new List<LotBE>()
+                        {
+                            new LotBE()
+                            {
+                                ExpiredDate = dtTP.Value,
+                                LotCode  = txtlot.Text,
+                                CreatedDate = DateTime.Now,
+                            }
+                        }
                     };
 
                     if (Isnuevo)
@@ -426,7 +445,8 @@ namespace ApplicationView.Forms.Product
             this.txtproductcode.Text = product.ProductCode;
             this.txtSalePrice.Text = product.SalePrice.ToString();
             this.txtPurchasePrice.Text = product.PurchasePrice.ToString();
-            this.dtTP.Value = product.ExpirationDate;
+            //this.dtTP.Value = product.Lots[0].ExpiredDate;
+            //this.txtlot.Text = product.Lots[0].LotCode;
             this.txtdescription.Text = product.Description;
             this.txtstock.Text = product.Stock.ToString();
 

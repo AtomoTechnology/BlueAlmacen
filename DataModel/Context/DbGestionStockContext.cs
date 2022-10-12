@@ -25,9 +25,13 @@ namespace DataModel.Context
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Sale> Sale { get; set; }
-        public DbSet<SaleDetail> SaleDetail { get; set; }
-        public DbSet<IncreasePriceAfterTwelve> IncreasePriceAfterTwelve { get; set; }
+        public DbSet<Sale> Sales { get; set; }
+        public DbSet<SaleDetail> SaleDetails { get; set; }
+        public DbSet<IncreasePriceAfterTwelve> IncreasePriceAfterTwelves { get; set; }
+        public DbSet<Lot> Lots { get; set; }
+        public DbSet<History> Histories { get; set; }
+        public DbSet<HistoryPrice> HistoryPrices { get; set; }
+        
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -63,6 +67,7 @@ namespace DataModel.Context
             new PaymentTypeConfiguration(modelBuilder.Entity<PaymentType>());
             new CategoryConfiguration(modelBuilder.Entity<Category>());
             new IncreasePriceAfterTwelveConfiguration(modelBuilder.Entity<IncreasePriceAfterTwelve>());
+            new HistoryConfiguration(modelBuilder.Entity<History>());
         }
     }
 }

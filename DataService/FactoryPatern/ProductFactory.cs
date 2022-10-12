@@ -32,13 +32,21 @@ namespace DataService.FactoryPatern
                     CategoryId = entity.CategoryId,
                     AccountId = entity.AccountId,
                     ProviderId = entity.ProviderId,
-                    ExpirationDate = entity.ExpirationDate,
                     ProductCode = entity.ProductCode,
                     Stock = entity.Stock,
                     PurchasePrice = entity.PurchasePrice,
                     SalePrice = entity.SalePrice,
                     Description = entity.Description,
                 };
+
+                if (entity.Lots != null)
+                {
+                    be.Lots = new List<LotBE>();
+                    foreach (var item in entity.Lots)
+                    {
+                        be.Lots.Add(LotFactoryPatern.GetInstance().CreateBusiness(item));
+                    }
+                }
                 return be;
             }
             return null;
@@ -60,7 +68,6 @@ namespace DataService.FactoryPatern
                     ProductName = be.ProductName,
                     CategoryId = be.CategoryId,
                     AccountId = be.AccountId,
-                    ExpirationDate = be.ExpirationDate,
                     ProductCode = be.ProductCode,
                     Stock = be.Stock,
                     ProviderId = be.ProviderId,
@@ -69,6 +76,14 @@ namespace DataService.FactoryPatern
                     Description = be.Description,
                 };
 
+                if (be.Lots != null)
+                {
+                    entity.Lots = new List<Lot>();
+                    foreach (var item in be.Lots)
+                    {
+                        entity.Lots.Add(LotFactoryPatern.GetInstance().CreateEntity(item));
+                    }
+                }
                 return entity;
             }
             return null;

@@ -25,8 +25,10 @@ namespace ApplicationView
         private readonly IProductService _repoProduct;
         private readonly ISaleService _repoSale;
         private readonly ISaleDetailService _repoSaleDetail;
+        private readonly IIncreasePriceAfterTwelveService _repoIncrease;
         public frmlogin(IAccountService repo, IRoleService repoRole, IBusnessService repoBusiness, ICategoryService repoCategory,
-            IProviderService repoProvider, IProductService repoProduct, ISaleService repoSale, ISaleDetailService repoSaleDetail)
+            IProviderService repoProvider, IProductService repoProduct, ISaleService repoSale, ISaleDetailService repoSaleDetail,
+            IIncreasePriceAfterTwelveService repoIncrease)
         {
             InitializeComponent();
             _repo = repo;
@@ -37,6 +39,13 @@ namespace ApplicationView
             _repoProduct = repoProduct;
             _repoSale = repoSale;
             _repoSaleDetail = repoSaleDetail;
+            _repoIncrease = repoIncrease;
+
+            if (LoginInfo.ischange == true)
+            {
+                this.txtusername.Text = String.Empty;
+                this.txtuserpass.Text = String.Empty;
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -89,16 +98,21 @@ namespace ApplicationView
                 else
                 {
                     AccountBE Datos = _repo.Login(usuario, password);
+                    BusinessBE be = null;
+                    if (Datos != null)
+                        be = _repoBusiness.GetBusinessByUserId(Datos.UserId);
+
                     if (Datos.Confirm == false)
                     {
                         LoginInfo.IdAccount = Datos.Id;
                         LoginInfo.IdUser = Datos.UserId;
                         LoginInfo.IdRole = Datos.RoleId;
-                        LoginInfo.User = Datos.UserName;
+                        LoginInfo.UserName = Datos.UserName;
                         LoginInfo.Pass = Datos.UserPass;
                         LoginInfo.Access = Datos?.Role?.RoleName;
+                        LoginInfo.IdBusiness = be?.Id;
 
-                        frmchangepass pass = new frmchangepass(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail);
+                        frmchangepass pass = new frmchangepass(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease);
                         pass.Show();
                         this.Hide();
                     }
@@ -107,11 +121,12 @@ namespace ApplicationView
                         LoginInfo.IdAccount = Datos.Id;
                         LoginInfo.IdUser = Datos.UserId;
                         LoginInfo.IdRole = Datos.RoleId;
-                        LoginInfo.User = Datos.UserName;
+                        LoginInfo.UserName = Datos.UserName;
                         LoginInfo.Pass = Datos.UserPass;
                         LoginInfo.Access = Datos?.Role?.RoleName;
+                        LoginInfo.IdBusiness = be?.Id;
 
-                        frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail); 
+                        frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease, _repo); 
 
                         principal.Show();
                         this.Hide();

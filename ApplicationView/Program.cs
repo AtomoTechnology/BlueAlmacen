@@ -1,5 +1,6 @@
 using ApplicationView.Forms.Business;
 using ApplicationView.Forms.Category;
+using ApplicationView.Forms.Configurations;
 using ApplicationView.Forms.Product;
 using ApplicationView.Forms.Provider;
 using ApplicationView.Forms.Roles;
@@ -36,7 +37,7 @@ namespace ApplicationView
 
             var host = CreateHostBuilder().Build();
             ServiceProvider = host.Services;
-            UpdateDataBase(ServiceProvider);
+            //UpdateDataBase(ServiceProvider);
 
             Application.Run(ServiceProvider.GetRequiredService<frmlogin>());
 
@@ -53,6 +54,8 @@ namespace ApplicationView
                     services.AddScoped<frmcategory>(); 
                     services.AddScoped<frmprovider>();
                     services.AddScoped<frmProduct>();
+                    services.AddScoped<frmIncreasePriceAfterTwelve>();
+                    
                         //services.AddEntityFrameworkS<DbGestionStockContext>();
 
                     services.AddScoped<IRoleRepository, RoleRepository>();
@@ -63,6 +66,7 @@ namespace ApplicationView
                     services.AddScoped<IProductRepository, ProductRepository>();
                     services.AddScoped<ISaleRepository, SaleRepository>();
                     services.AddScoped<ISaleDetailRepoository, SaleDetailRepoository>();
+                    services.AddScoped<IIncreasePriceAfterTwelveRepository, IncreasePriceAfterTwelveRepository>();
 
                     services.AddScoped<IRoleService, RoleService>();
                     services.AddScoped<IBusnessService, BusnessService>();
@@ -72,6 +76,7 @@ namespace ApplicationView
                     services.AddScoped<IProductService, ProductService>();
                     services.AddScoped<ISaleService, SaleService>();
                     services.AddScoped<ISaleDetailService, SaleDetailService>();
+                    services.AddScoped<IIncreasePriceAfterTwelveService, IncreasePriceAfterTwelveService>();
 
                 });
         }

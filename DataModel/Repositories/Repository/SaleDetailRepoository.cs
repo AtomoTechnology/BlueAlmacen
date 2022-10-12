@@ -50,7 +50,7 @@ namespace DataModel.Repositories.Repository
         {
             try
             {
-                var entities = _context.SaleDetail.Include(P => P.Product).Where(u => u.SaleId == saleCode);              
+                var entities = _context.SaleDetails.Include(P => P.Product).Include(p => p.Sale).Where(u => u.SaleId == saleCode);              
                 return entities.ToList();
             }
             catch (Exception ex)

@@ -11,7 +11,7 @@ namespace BusnessEntities.BE
         public Decimal Total { get; set; }
         public Boolean finalizeSale { get; set; }
         public String SaleType { get; set; }
-
+        public Int64 InvoiceCode { get; set; }
         public PaymentTypeBE PaymentType { get; set; }
         public List<SaleDetailBE> SaleDetail { get; set; }
     }

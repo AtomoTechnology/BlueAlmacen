@@ -33,6 +33,9 @@ namespace DataModel.Migrations
                     b.Property<DateTime?>("FinalDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("RoleId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -61,6 +64,30 @@ namespace DataModel.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Accounts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3e67c8f7-24ce-4f2e-bada-8344f5d0f8ca",
+                            Confirm = true,
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 719, DateTimeKind.Local).AddTicks(3198),
+                            RoleId = "82a0bec6-8266-443a-84a2-af85ad69348b",
+                            UserId = "362c2637-2ad9-449a-9498-dbd74be87ee8",
+                            UserName = "almacen",
+                            UserPass = "odeNiMDGrhgpMHmoHQKCQg==",
+                            state = 1
+                        },
+                        new
+                        {
+                            Id = "ed456bd3-2578-45a8-81f6-938c6a4cf9b3",
+                            Confirm = true,
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 745, DateTimeKind.Local).AddTicks(9316),
+                            RoleId = "66e3d763-3f6c-49f1-ad72-3b64051c4879",
+                            UserId = "362c2637-2ad9-449a-9498-dbd74be87ee8",
+                            UserName = "cajero",
+                            UserPass = "odeNiMDGrhgpMHmoHQKCQg==",
+                            state = 1
+                        });
                 });
 
             modelBuilder.Entity("DataModel.Entities.Business", b =>
@@ -87,6 +114,9 @@ namespace DataModel.Migrations
                     b.Property<DateTime?>("FinalDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
@@ -97,6 +127,18 @@ namespace DataModel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Businesses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "de07358c-3a51-42fb-8690-c383b91b5844",
+                            Address = "San Lorenzo",
+                            BusinessName = "Almacen",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 758, DateTimeKind.Local).AddTicks(3463),
+                            Cuit_Cuil = "30-45785215-9",
+                            Phone = "3419875425",
+                            state = 1
+                        });
                 });
 
             modelBuilder.Entity("DataModel.Entities.Category", b =>
@@ -109,15 +151,21 @@ namespace DataModel.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<DateTime?>("FinalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("state")
@@ -128,6 +176,177 @@ namespace DataModel.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4444da14-84ac-48de-a7da-a4f4ddd28858",
+                            AccountId = "3e67c8f7-24ce-4f2e-bada-8344f5d0f8ca",
+                            CategoryName = "Perfumeria",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 771, DateTimeKind.Local).AddTicks(5933),
+                            Description = "Se encuentra todo sobre perfumeria",
+                            state = 1
+                        });
+                });
+
+            modelBuilder.Entity("DataModel.Entities.History", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FinalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModuleAction")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("OptionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("state")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("Histories");
+                });
+
+            modelBuilder.Entity("DataModel.Entities.HistoryPrice", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FinalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("PricePurchase")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PriceSale")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("state")
+                        .HasColumnType("int");
+
+                    b.Property<int>("typeUpdate")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("HistoryPrices");
+                });
+
+            modelBuilder.Entity("DataModel.Entities.IncreasePriceAfterTwelve", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FinalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("HourFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("HourTo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Porcent")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("state")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("IncreasePriceAfterTwelves");
+                });
+
+            modelBuilder.Entity("DataModel.Entities.Lot", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiredDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FinalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LotCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("state")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Lots");
                 });
 
             modelBuilder.Entity("DataModel.Entities.PaymentType", b =>
@@ -136,19 +355,26 @@ namespace DataModel.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AccountId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<DateTime?>("FinalDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("PaymentName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<int>("state")
                         .HasColumnType("int");
@@ -158,6 +384,80 @@ namespace DataModel.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("PaymentTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "f5f737fd-860c-485b-972a-927d385f4ab5",
+                            AccountId = "3e67c8f7-24ce-4f2e-bada-8344f5d0f8ca",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 769, DateTimeKind.Local).AddTicks(6936),
+                            Description = "Efectivo",
+                            PaymentName = "Efectivo",
+                            state = 1
+                        },
+                        new
+                        {
+                            Id = "4c1ffed9-2f0c-4294-8b82-d236da387b39",
+                            AccountId = "3e67c8f7-24ce-4f2e-bada-8344f5d0f8ca",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 769, DateTimeKind.Local).AddTicks(7925),
+                            Description = "Tarjeta de debito",
+                            PaymentName = "Tarjeta de debito",
+                            state = 1
+                        },
+                        new
+                        {
+                            Id = "3700a7b3-0e1b-49e2-87ce-490d06d2512c",
+                            AccountId = "3e67c8f7-24ce-4f2e-bada-8344f5d0f8ca",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 769, DateTimeKind.Local).AddTicks(7947),
+                            Description = "Tarjeta de credito",
+                            PaymentName = "Tarjeta de credito",
+                            state = 1
+                        },
+                        new
+                        {
+                            Id = "50e82295-a08f-42fa-aae0-26813bc261db",
+                            AccountId = "3e67c8f7-24ce-4f2e-bada-8344f5d0f8ca",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 769, DateTimeKind.Local).AddTicks(7950),
+                            Description = "Cheques",
+                            PaymentName = "Cheques",
+                            state = 1
+                        },
+                        new
+                        {
+                            Id = "1535f60d-2db1-4c65-90bc-c1ded55b07aa",
+                            AccountId = "3e67c8f7-24ce-4f2e-bada-8344f5d0f8ca",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 769, DateTimeKind.Local).AddTicks(7952),
+                            Description = "Mercado pago",
+                            PaymentName = "Mercado pago",
+                            state = 1
+                        },
+                        new
+                        {
+                            Id = "876d4600-b062-4e84-937d-8a79f88c1e47",
+                            AccountId = "3e67c8f7-24ce-4f2e-bada-8344f5d0f8ca",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 769, DateTimeKind.Local).AddTicks(7954),
+                            Description = "Transferencia bancaria",
+                            PaymentName = "Transferencia bancaria",
+                            state = 1
+                        },
+                        new
+                        {
+                            Id = "c3eb2f61-7bd0-47ed-8a16-98e1b7d24b44",
+                            AccountId = "3e67c8f7-24ce-4f2e-bada-8344f5d0f8ca",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 769, DateTimeKind.Local).AddTicks(7957),
+                            Description = "Especie",
+                            PaymentName = "Especie",
+                            state = 1
+                        },
+                        new
+                        {
+                            Id = "da40a532-f06a-4fff-8f66-a7563fef8941",
+                            AccountId = "3e67c8f7-24ce-4f2e-bada-8344f5d0f8ca",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 769, DateTimeKind.Local).AddTicks(7959),
+                            Description = "Cuenta Corriente",
+                            PaymentName = "Cuenta Corriente",
+                            state = 1
+                        });
                 });
 
             modelBuilder.Entity("DataModel.Entities.Product", b =>
@@ -177,10 +477,10 @@ namespace DataModel.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ExpirationDate")
+                    b.Property<DateTime?>("FinalDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("FinalDate")
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ProductCode")
@@ -238,6 +538,9 @@ namespace DataModel.Migrations
                     b.Property<DateTime?>("FinalDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(250)")
@@ -272,6 +575,9 @@ namespace DataModel.Migrations
                     b.Property<DateTime?>("FinalDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("RoleName")
                         .IsRequired()
                         .HasColumnType("nvarchar(250)")
@@ -283,6 +589,32 @@ namespace DataModel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "82a0bec6-8266-443a-84a2-af85ad69348b",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 766, DateTimeKind.Local).AddTicks(9105),
+                            Description = "Tiene acceso en todo",
+                            RoleName = "Admin",
+                            state = 1
+                        },
+                        new
+                        {
+                            Id = "66e3d763-3f6c-49f1-ad72-3b64051c4879",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 766, DateTimeKind.Local).AddTicks(9537),
+                            Description = "Tiene acceso para realizar ventas, con limite",
+                            RoleName = "Empleado(a)",
+                            state = 1
+                        },
+                        new
+                        {
+                            Id = "0ac46b16-ef03-452c-9586-ba4251496b3f",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 766, DateTimeKind.Local).AddTicks(9544),
+                            Description = "Solo puede hacer control de stock",
+                            RoleName = "Almacenero(a)",
+                            state = 1
+                        });
                 });
 
             modelBuilder.Entity("DataModel.Entities.Sale", b =>
@@ -299,7 +631,14 @@ namespace DataModel.Migrations
                     b.Property<DateTime?>("FinalDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("InvoiceCode")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("PaymentTypeId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SaleType")
@@ -318,7 +657,7 @@ namespace DataModel.Migrations
 
                     b.HasIndex("PaymentTypeId");
 
-                    b.ToTable("Sale");
+                    b.ToTable("Sales");
                 });
 
             modelBuilder.Entity("DataModel.Entities.SaleDetail", b =>
@@ -326,13 +665,13 @@ namespace DataModel.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AccountId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FinalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SaleId")
@@ -352,13 +691,11 @@ namespace DataModel.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
-
                     b.HasIndex("SaleId");
 
                     b.HasIndex("productId");
 
-                    b.ToTable("SaleDetail");
+                    b.ToTable("SaleDetails");
                 });
 
             modelBuilder.Entity("DataModel.Entities.User", b =>
@@ -392,6 +729,9 @@ namespace DataModel.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
@@ -404,6 +744,20 @@ namespace DataModel.Migrations
                     b.HasIndex("BusinessId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "362c2637-2ad9-449a-9498-dbd74be87ee8",
+                            Address = "San Lorenzo",
+                            BusinessId = "de07358c-3a51-42fb-8690-c383b91b5844",
+                            CreatedDate = new DateTime(2022, 10, 12, 15, 50, 38, 764, DateTimeKind.Local).AddTicks(7771),
+                            Email = "almacensanlorenzo@gmail.com",
+                            FirstName = "Almacen",
+                            LastName = "San Lorenzo",
+                            Phone = "3416987542",
+                            state = 1
+                        });
                 });
 
             modelBuilder.Entity("DataModel.Entities.Account", b =>
@@ -430,11 +784,51 @@ namespace DataModel.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DataModel.Entities.History", b =>
+                {
+                    b.HasOne("DataModel.Entities.Account", "Account")
+                        .WithMany("History")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DataModel.Entities.HistoryPrice", b =>
+                {
+                    b.HasOne("DataModel.Entities.Account", "Account")
+                        .WithMany("HistoryPrice")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataModel.Entities.Product", "Product")
+                        .WithMany("HistoryPrice")
+                        .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("DataModel.Entities.IncreasePriceAfterTwelve", b =>
+                {
+                    b.HasOne("DataModel.Entities.Account", "Account")
+                        .WithMany("IncreasePriceAfterTwelve")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DataModel.Entities.Lot", b =>
+                {
+                    b.HasOne("DataModel.Entities.Product", "Product")
+                        .WithMany("Lots")
+                        .HasForeignKey("ProductId");
+                });
+
             modelBuilder.Entity("DataModel.Entities.PaymentType", b =>
                 {
                     b.HasOne("DataModel.Entities.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId");
+                        .WithMany("PaymentType")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataModel.Entities.Product", b =>
@@ -465,16 +859,14 @@ namespace DataModel.Migrations
                 {
                     b.HasOne("DataModel.Entities.PaymentType", "PaymentType")
                         .WithMany("Sale")
-                        .HasForeignKey("PaymentTypeId");
+                        .HasForeignKey("PaymentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataModel.Entities.SaleDetail", b =>
                 {
-                    b.HasOne("DataModel.Entities.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId");
-
-                    b.HasOne("DataModel.Entities.Sale", null)
+                    b.HasOne("DataModel.Entities.Sale", "Sale")
                         .WithMany("SaleDetail")
                         .HasForeignKey("SaleId");
 

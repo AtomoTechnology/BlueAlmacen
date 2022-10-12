@@ -80,10 +80,19 @@ namespace DataModel.Configuration
                  Description = "Especie",
                  PaymentName = "Especie",
                  state = (Int32)StateEnum.Activeted
+             },
+             new PaymentType()
+             {
+                 Id = "da40a532-f06a-4fff-8f66-a7563fef8941",
+                 AccountId = "3e67c8f7-24ce-4f2e-bada-8344f5d0f8ca",
+                 CreatedDate = DateTime.Now,
+                 Description = "Cuenta Corriente",
+                 PaymentName = "Cuenta Corriente",
+                 state = (Int32)StateEnum.Activeted
              }
             );
 
-            entityBuilder.HasMany(e => e.Sale).WithOne(e => e.PaymentType).HasForeignKey(e => e.AccountId).IsRequired();
+            entityBuilder.HasMany(e => e.Sale).WithOne(e => e.PaymentType).HasForeignKey(e => e.PaymentTypeId).IsRequired();
         }
     }
 }

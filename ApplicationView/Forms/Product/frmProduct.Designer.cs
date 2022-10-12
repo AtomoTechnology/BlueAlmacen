@@ -46,6 +46,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtstock = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.dtTP = new System.Windows.Forms.DateTimePicker();
             this.label10 = new System.Windows.Forms.Label();
             this.txtprovproductId = new System.Windows.Forms.TextBox();
@@ -80,8 +82,8 @@
             this.btnLast = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.btnFirst = new System.Windows.Forms.Button();
-            this.txtstock = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.txtlot = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataList)).BeginInit();
@@ -276,6 +278,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txtlot);
+            this.groupBox2.Controls.Add(this.label13);
             this.groupBox2.Controls.Add(this.txtstock);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.dtTP);
@@ -306,6 +310,23 @@
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos del proveedor";
+            // 
+            // txtstock
+            // 
+            this.txtstock.Location = new System.Drawing.Point(765, 99);
+            this.txtstock.MaxLength = 20;
+            this.txtstock.Name = "txtstock";
+            this.txtstock.Size = new System.Drawing.Size(318, 27);
+            this.txtstock.TabIndex = 37;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(603, 104);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(155, 20);
+            this.label11.TabIndex = 36;
+            this.label11.Text = "Cantidad de producto";
             // 
             // dtTP
             // 
@@ -487,7 +508,7 @@
             this.txtproductname.Location = new System.Drawing.Point(179, 62);
             this.txtproductname.MaxLength = 100;
             this.txtproductname.Name = "txtproductname";
-            this.txtproductname.Size = new System.Drawing.Size(580, 27);
+            this.txtproductname.Size = new System.Drawing.Size(503, 27);
             this.txtproductname.TabIndex = 17;
             // 
             // label3
@@ -631,22 +652,22 @@
             this.btnFirst.UseVisualStyleBackColor = true;
             this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
             // 
-            // txtstock
+            // txtlot
             // 
-            this.txtstock.Location = new System.Drawing.Point(765, 99);
-            this.txtstock.MaxLength = 20;
-            this.txtstock.Name = "txtstock";
-            this.txtstock.Size = new System.Drawing.Size(318, 27);
-            this.txtstock.TabIndex = 37;
+            this.txtlot.Location = new System.Drawing.Point(770, 62);
+            this.txtlot.MaxLength = 100;
+            this.txtlot.Name = "txtlot";
+            this.txtlot.Size = new System.Drawing.Size(389, 27);
+            this.txtlot.TabIndex = 39;
             // 
-            // label11
+            // label13
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(603, 104);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(155, 20);
-            this.label11.TabIndex = 36;
-            this.label11.Text = "Cantidad de producto";
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(700, 69);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(38, 20);
+            this.label13.TabIndex = 38;
+            this.label13.Text = "Lote";
             // 
             // frmProduct
             // 
@@ -730,5 +751,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtstock;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtlot;
+        private System.Windows.Forms.Label label13;
     }
 }

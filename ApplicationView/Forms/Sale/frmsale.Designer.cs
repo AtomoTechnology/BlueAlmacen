@@ -36,6 +36,7 @@
             this.SalePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SaleId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.InvoiceCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,6 +45,10 @@
             this.txtreadcode = new System.Windows.Forms.TextBox();
             this.productqquantity = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.nrofact = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtcajeroname = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataList)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.SuspendLayout();
@@ -62,7 +67,8 @@
             this.ProductName,
             this.SalePrice,
             this.quantity,
-            this.SaleId});
+            this.SaleId,
+            this.InvoiceCode});
             this.dataList.Location = new System.Drawing.Point(12, 138);
             this.dataList.MultiSelect = false;
             this.dataList.Name = "dataList";
@@ -73,6 +79,7 @@
             this.dataList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataList.Size = new System.Drawing.Size(1749, 546);
             this.dataList.TabIndex = 1;
+            this.dataList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataList_CellDoubleClick);
             // 
             // ID
             // 
@@ -130,6 +137,14 @@
             this.SaleId.Name = "SaleId";
             this.SaleId.ReadOnly = true;
             // 
+            // InvoiceCode
+            // 
+            this.InvoiceCode.DataPropertyName = "InvoiceCode";
+            this.InvoiceCode.HeaderText = "Nro factura";
+            this.InvoiceCode.MinimumWidth = 6;
+            this.InvoiceCode.Name = "InvoiceCode";
+            this.InvoiceCode.ReadOnly = true;
+            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.lblStatus);
@@ -173,6 +188,7 @@
             this.btnpay.TabIndex = 5;
             this.btnpay.Text = "Cobrar";
             this.btnpay.UseVisualStyleBackColor = true;
+            this.btnpay.Click += new System.EventHandler(this.btnpay_Click);
             // 
             // label1
             // 
@@ -200,7 +216,7 @@
             this.productqquantity.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.productqquantity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.productqquantity.Font = new System.Drawing.Font("Segoe UI", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.productqquantity.Location = new System.Drawing.Point(1391, 34);
+            this.productqquantity.Location = new System.Drawing.Point(1344, 60);
             this.productqquantity.Name = "productqquantity";
             this.productqquantity.Size = new System.Drawing.Size(367, 56);
             this.productqquantity.TabIndex = 9;
@@ -210,26 +226,74 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(985, 40);
+            this.label4.Location = new System.Drawing.Point(1338, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(372, 45);
             this.label4.TabIndex = 8;
             this.label4.Text = "Cantidad de productos";
+            // 
+            // nrofact
+            // 
+            this.nrofact.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.nrofact.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nrofact.Font = new System.Drawing.Font("Segoe UI", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.nrofact.Location = new System.Drawing.Point(18, 60);
+            this.nrofact.Name = "nrofact";
+            this.nrofact.Size = new System.Drawing.Size(367, 56);
+            this.nrofact.TabIndex = 11;
+            this.nrofact.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(16, 10);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(199, 45);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Nro factura";
+            // 
+            // txtcajeroname
+            // 
+            this.txtcajeroname.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.txtcajeroname.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.txtcajeroname.Font = new System.Drawing.Font("Segoe UI", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.txtcajeroname.Location = new System.Drawing.Point(681, 60);
+            this.txtcajeroname.Name = "txtcajeroname";
+            this.txtcajeroname.Size = new System.Drawing.Size(367, 56);
+            this.txtcajeroname.TabIndex = 13;
+            this.txtcajeroname.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(696, 10);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(161, 45);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Cajero(a)";
             // 
             // frmsale
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1773, 796);
+            this.Controls.Add(this.txtcajeroname);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.nrofact);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.productqquantity);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dataList);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmsale";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Venta de producto";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmsale_FormClosing);
             this.Load += new System.EventHandler(this.frmsale_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataList)).EndInit();
             this.groupBox5.ResumeLayout(false);
@@ -250,6 +314,10 @@
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label productqquantity;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label nrofact;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label txtcajeroname;
+        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn productId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductCode;
@@ -257,5 +325,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SalePrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn quantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn SaleId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn InvoiceCode;
     }
 }

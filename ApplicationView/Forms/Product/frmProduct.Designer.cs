@@ -46,6 +46,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtlot = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.txtstock = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.dtTP = new System.Windows.Forms.DateTimePicker();
@@ -82,8 +84,6 @@
             this.btnLast = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.btnFirst = new System.Windows.Forms.Button();
-            this.txtlot = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataList)).BeginInit();
@@ -309,7 +309,24 @@
             this.groupBox2.Size = new System.Drawing.Size(1233, 496);
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Datos del proveedor";
+            this.groupBox2.Text = "Datos del producto";
+            // 
+            // txtlot
+            // 
+            this.txtlot.Location = new System.Drawing.Point(770, 62);
+            this.txtlot.MaxLength = 100;
+            this.txtlot.Name = "txtlot";
+            this.txtlot.Size = new System.Drawing.Size(389, 27);
+            this.txtlot.TabIndex = 39;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(700, 69);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(38, 20);
+            this.label13.TabIndex = 38;
+            this.label13.Text = "Lote";
             // 
             // txtstock
             // 
@@ -651,23 +668,6 @@
             this.btnFirst.Text = "|<";
             this.btnFirst.UseVisualStyleBackColor = true;
             this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
-            // 
-            // txtlot
-            // 
-            this.txtlot.Location = new System.Drawing.Point(770, 62);
-            this.txtlot.MaxLength = 100;
-            this.txtlot.Name = "txtlot";
-            this.txtlot.Size = new System.Drawing.Size(389, 27);
-            this.txtlot.TabIndex = 39;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(700, 69);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(38, 20);
-            this.label13.TabIndex = 38;
-            this.label13.Text = "Lote";
             // 
             // frmProduct
             // 

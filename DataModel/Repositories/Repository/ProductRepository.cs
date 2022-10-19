@@ -1,6 +1,7 @@
 ﻿using DataModel.Context;
 using DataModel.Entities;
 using DataModel.Repositories.IRepository;
+using Microsoft.EntityFrameworkCore;
 using Resolver.Enums;
 using Resolver.HelperError.Handlers;
 using Resolver.HelperError.IExceptions;
@@ -80,7 +81,7 @@ namespace DataModel.Repositories.Repository
         {
             try
             {
-                var entities = _context.Products.Where(u => (u.state == state && u.FinalDate == null) && (u.ProductName == name || string.IsNullOrEmpty(name)));
+                var entities = _context.Products.Include(u => u.Lots).Where(u => (u.state == state && u.FinalDate == null) && (u.ProductName == name || string.IsNullOrEmpty(name)));
                 count = entities.Count();
                 var skipAmount = 0;
                 if (page > 0)
@@ -134,8 +135,8 @@ namespace DataModel.Repositories.Repository
             {
                 var entity = _context.Products.Find(id);
                 if (entity == null)
-                    throw new ApiBusinessException("3000", "NO existe ese producto", System.Net.HttpStatusCode.NotFound, "Http");
-
+                    throw new ApiBusinessException("3000", "NO existe ese producto", System.Net.HttpStatusCode.NotFound, "Http");    
+                
                 entity.Description = product.Description;
                 entity.ProductName = product.ProductName;
                 entity.PurchasePrice = product.PurchasePrice;
@@ -145,6 +146,20 @@ namespace DataModel.Repositories.Repository
                 entity.Stock = product.Stock;
                 entity.ProductCode = product.ProductCode;
 
+                var result = _context.Lots.SingleOrDefault(u => u.LotCode == product.Lots[0].LotCode && u.state == (Int32)StateEnum.Activeted);
+                if (result == null)
+                {
+                    foreach (var item in product.Lots)
+                    {
+                        item.ProductId = id;
+                        item.Id = Guid.NewGuid().ToString();
+                        item.CreatedDate = DateTime.Now;
+                        item.FinalDate = null;
+                        item.state = (Int32)StateEnum.Activeted;
+
+                        _context.Add(item);
+                    }
+                }
                 _context.SaveChanges();
 
                 return "El producto fue modificado con exito!";
@@ -155,7 +170,7 @@ namespace DataModel.Repositories.Repository
             }
         }
 
-        public string UpdatePrices(string id, string accountId, decimal porcent, UpdatePriceEnum priceenum, bool ispurchaseprice = false)
+        public string UpdatePrices(string id, string accountId, decimal porcentsale, decimal porcentpurchase, UpdatePriceEnum priceenum, bool ispurchaseprice = false)
         {
             string productName = string.Empty;
             List<HistoryPrice> historicprice = null;
@@ -175,13 +190,11 @@ namespace DataModel.Repositories.Repository
                             ProductId = item.Id,
                             AccountId = accountId,
                             CreatedDate = DateTime.Now,
-                            PricePurchase = item.PurchasePrice,
-                            PriceSale = item.SalePrice,
+                            PricePurchase = ispurchaseprice == true ? item.PurchasePrice * (1 + (porcentpurchase / 100)) : item.PurchasePrice,
+                            PriceSale = item.SalePrice * (1 + (porcentsale / 100)),
                             typeUpdate =(Int32)priceenum,
                             state = (Int32)StateEnum.Activeted,
                         });
-                        item.PurchasePrice = item.PurchasePrice * (1 + (porcent / 100));
-                        item.SalePrice = item.SalePrice * (1 + (porcent / 100));
                     }
                 }
                 else
@@ -199,21 +212,12 @@ namespace DataModel.Repositories.Repository
                         ProductId = entity.Id,
                         AccountId = accountId,
                         CreatedDate = DateTime.Now,
-                        PricePurchase = entity.PurchasePrice,
-                        PriceSale = entity.SalePrice,
+                        PricePurchase = ispurchaseprice == true ? entity.PurchasePrice * (1 + (porcentpurchase / 100)) : entity.PurchasePrice,
+                        PriceSale = entity.SalePrice * (1 + (porcentsale / 100)),
                         typeUpdate = (Int32)priceenum,
                         state = (Int32)StateEnum.Activeted,
                     });
-
-                    if (ispurchaseprice)
-                    {
-                        entity.PurchasePrice = entity.PurchasePrice * (1 + (porcent / 100));
-                        entity.SalePrice = entity.SalePrice * (1 + (porcent / 100));
-                    }
-                    else
-                    {
-                        entity.SalePrice = entity.SalePrice * (1 + (porcent / 100));
-                    }
+                   
                     productName = entity.ProductName;
                 }
                 _context.AddRange(historicprice);
@@ -221,6 +225,23 @@ namespace DataModel.Repositories.Repository
                 var resp = (UpdatePriceEnum.All == priceenum || ispurchaseprice);
                 var ms = "El precio para el producto " + "* " + productName + " *" + " se actualizó correctamente. \n Deseas seguir actualizando otro precio de producto?";
                 return (resp ? "Los precios fueron actualizados con exitos!" : ms);
+            }
+            catch (Exception ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
+        }
+
+        public bool SearchExpiredProductByLotCode(string lotCode)
+        {
+            try
+            {
+                var result = _context.Lots.SingleOrDefault(u => u.LotCode == lotCode && u.state == (Int32)StateEnum.Activeted);
+                if (result == null)
+                    return true;
+                if (result.ExpiredDate < DateTime.Now)
+                    throw new ApiBusinessException("3000", "Esta vencido el producto para ese lote", System.Net.HttpStatusCode.NotFound, "Http");
+                return true;
             }
             catch (Exception ex)
             {

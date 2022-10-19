@@ -34,14 +34,14 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.salirDelSistemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ingresoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.produdosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultarStockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fechaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.codigoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.promoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.egresoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vencimientoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.promoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionDeUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,7 +62,7 @@
             this.categoriaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.incrementoDespuesDeLas12PMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actualizarPrecioDeProductoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.actualizarPrecioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.precioProductoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -125,24 +125,24 @@
             // ingresoToolStripMenuItem
             // 
             this.ingresoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.produdosToolStripMenuItem,
-            this.consultarStockToolStripMenuItem,
-            this.promoToolStripMenuItem});
+            this.saleToolStripMenuItem,
+            this.consultarStockToolStripMenuItem});
             this.ingresoToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Desktop;
             this.ingresoToolStripMenuItem.Name = "ingresoToolStripMenuItem";
             this.ingresoToolStripMenuItem.Size = new System.Drawing.Size(109, 55);
             this.ingresoToolStripMenuItem.Text = "Ingreso";
             // 
-            // produdosToolStripMenuItem
+            // saleToolStripMenuItem
             // 
-            this.produdosToolStripMenuItem.Name = "produdosToolStripMenuItem";
-            this.produdosToolStripMenuItem.Size = new System.Drawing.Size(224, 32);
-            this.produdosToolStripMenuItem.Text = "Ventas";
-            this.produdosToolStripMenuItem.Click += new System.EventHandler(this.produdosToolStripMenuItem_Click);
+            this.saleToolStripMenuItem.Name = "saleToolStripMenuItem";
+            this.saleToolStripMenuItem.Size = new System.Drawing.Size(224, 32);
+            this.saleToolStripMenuItem.Text = "Ventas";
+            this.saleToolStripMenuItem.Click += new System.EventHandler(this.produdosToolStripMenuItem_Click);
             // 
             // consultarStockToolStripMenuItem
             // 
             this.consultarStockToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.precioProductoToolStripMenuItem,
             this.fechaToolStripMenuItem,
             this.codigoToolStripMenuItem});
             this.consultarStockToolStripMenuItem.Name = "consultarStockToolStripMenuItem";
@@ -152,27 +152,21 @@
             // fechaToolStripMenuItem
             // 
             this.fechaToolStripMenuItem.Name = "fechaToolStripMenuItem";
-            this.fechaToolStripMenuItem.Size = new System.Drawing.Size(178, 32);
-            this.fechaToolStripMenuItem.Text = "Fecha";
+            this.fechaToolStripMenuItem.Size = new System.Drawing.Size(309, 32);
+            this.fechaToolStripMenuItem.Text = "Fecha vencimiento";
             // 
             // codigoToolStripMenuItem
             // 
             this.codigoToolStripMenuItem.Name = "codigoToolStripMenuItem";
-            this.codigoToolStripMenuItem.Size = new System.Drawing.Size(178, 32);
+            this.codigoToolStripMenuItem.Size = new System.Drawing.Size(309, 32);
             this.codigoToolStripMenuItem.Text = "Codigo";
-            // 
-            // promoToolStripMenuItem
-            // 
-            this.promoToolStripMenuItem.Name = "promoToolStripMenuItem";
-            this.promoToolStripMenuItem.Size = new System.Drawing.Size(224, 32);
-            this.promoToolStripMenuItem.Text = "Promo";
             // 
             // egresoToolStripMenuItem
             // 
             this.egresoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.productosToolStripMenuItem,
             this.vencimientoToolStripMenuItem,
-            this.actualizarPrecioToolStripMenuItem});
+            this.promoToolStripMenuItem});
             this.egresoToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Desktop;
             this.egresoToolStripMenuItem.Name = "egresoToolStripMenuItem";
             this.egresoToolStripMenuItem.Size = new System.Drawing.Size(104, 55);
@@ -181,15 +175,21 @@
             // productosToolStripMenuItem
             // 
             this.productosToolStripMenuItem.Name = "productosToolStripMenuItem";
-            this.productosToolStripMenuItem.Size = new System.Drawing.Size(288, 32);
+            this.productosToolStripMenuItem.Size = new System.Drawing.Size(236, 32);
             this.productosToolStripMenuItem.Text = "Productos";
             this.productosToolStripMenuItem.Click += new System.EventHandler(this.productosToolStripMenuItem_Click);
             // 
             // vencimientoToolStripMenuItem
             // 
             this.vencimientoToolStripMenuItem.Name = "vencimientoToolStripMenuItem";
-            this.vencimientoToolStripMenuItem.Size = new System.Drawing.Size(288, 32);
+            this.vencimientoToolStripMenuItem.Size = new System.Drawing.Size(236, 32);
             this.vencimientoToolStripMenuItem.Text = "Vencimiento";
+            // 
+            // promoToolStripMenuItem
+            // 
+            this.promoToolStripMenuItem.Name = "promoToolStripMenuItem";
+            this.promoToolStripMenuItem.Size = new System.Drawing.Size(236, 32);
+            this.promoToolStripMenuItem.Text = "Promo";
             // 
             // consultaToolStripMenuItem
             // 
@@ -227,6 +227,7 @@
             this.cambiarContraseñaToolStripMenuItem.Name = "cambiarContraseñaToolStripMenuItem";
             this.cambiarContraseñaToolStripMenuItem.Size = new System.Drawing.Size(321, 32);
             this.cambiarContraseñaToolStripMenuItem.Text = "Cambiar contraseña";
+            this.cambiarContraseñaToolStripMenuItem.Click += new System.EventHandler(this.cambiarContraseñaToolStripMenuItem_Click);
             // 
             // gestionarProveedorToolStripMenuItem
             // 
@@ -339,14 +340,14 @@
             // 
             this.actualizarPrecioDeProductoToolStripMenuItem.Name = "actualizarPrecioDeProductoToolStripMenuItem";
             this.actualizarPrecioDeProductoToolStripMenuItem.Size = new System.Drawing.Size(467, 32);
-            this.actualizarPrecioDeProductoToolStripMenuItem.Text = "Actualizar precio de producto";
+            this.actualizarPrecioDeProductoToolStripMenuItem.Text = "Actualizar precios";
+            this.actualizarPrecioDeProductoToolStripMenuItem.Click += new System.EventHandler(this.actualizarPrecioDeProductoToolStripMenuItem_Click);
             // 
-            // actualizarPrecioToolStripMenuItem
+            // precioProductoToolStripMenuItem
             // 
-            this.actualizarPrecioToolStripMenuItem.Name = "actualizarPrecioToolStripMenuItem";
-            this.actualizarPrecioToolStripMenuItem.Size = new System.Drawing.Size(288, 32);
-            this.actualizarPrecioToolStripMenuItem.Text = "Actualizar precio";
-            this.actualizarPrecioToolStripMenuItem.Click += new System.EventHandler(this.actualizarPrecioToolStripMenuItem_Click);
+            this.precioProductoToolStripMenuItem.Name = "precioProductoToolStripMenuItem";
+            this.precioProductoToolStripMenuItem.Size = new System.Drawing.Size(309, 32);
+            this.precioProductoToolStripMenuItem.Text = "Precio producto";
             // 
             // frmPrincipal
             // 
@@ -358,14 +359,14 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
-            this.MaximizeBox = false;
             this.Name = "frmPrincipal";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "frmPrincipal";
+            this.Text = "Sistema de ventas y de gestiones de stock";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPrincipal_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPrincipal_FormClosed);
+            this.Load += new System.EventHandler(this.frmPrincipal_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -377,7 +378,7 @@
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem sysVentaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ingresoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem produdosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem egresoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem productosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaToolStripMenuItem;
@@ -398,7 +399,6 @@
         private System.Windows.Forms.ToolStripMenuItem consultarStockToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fechaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem codigoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem promoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vencimientoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem categoriaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gestionarProveedorToolStripMenuItem;
@@ -408,6 +408,7 @@
         private System.Windows.Forms.ToolStripMenuItem actualizarPrecioDeProductoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cambiarSessionToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem actualizarPrecioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem promoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem precioProductoToolStripMenuItem;
     }
 }

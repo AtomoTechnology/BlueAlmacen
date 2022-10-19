@@ -43,7 +43,7 @@ namespace DataModel.Repositories.Repository
             {
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
-        }
+        }     
         public string Delete(string id)
         {
             try

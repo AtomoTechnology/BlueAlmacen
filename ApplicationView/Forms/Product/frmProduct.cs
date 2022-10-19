@@ -5,6 +5,7 @@ using ApplicationView.VariableSeesion;
 using BusnessEntities.BE;
 using DataService.Iservice;
 using Resolver.Enums;
+using Resolver.HelperError.IExceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -309,7 +310,7 @@ namespace ApplicationView.Forms.Product
                 else if (txtlot.Text.Trim().Equals(""))
                 {
                     MessageBox.Show("Debe ingresar  el lote del producto", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtproductcode.Text = String.Empty;
+                    txtlot.Text = String.Empty;
                 }
                 else if (txtproductcode.Text.Trim().Equals(""))
                 {
@@ -323,9 +324,14 @@ namespace ApplicationView.Forms.Product
                     txtstock.Text = String.Empty;
                     txtstock.Focus();
                 }
-                else if (dtTP.Text.Trim().Equals("") || dtTP.Value <= DateTime.Now)
+                else if (dtTP.Text.Trim().Equals(""))
                 {
                     MessageBox.Show("Debe seleccionar  la fecha del vencimiento del producto", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dtTP.Value = DateTime.Now;
+                }
+                else if (dtTP.Value <= DateTime.Now)
+                {
+                    MessageBox.Show("La fecha de vencimiento del producto no puede ser menor que hoy", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     dtTP.Value = DateTime.Now;
                 }
                 else if (txtcatproductId.Text.Trim().Equals(""))
@@ -360,6 +366,7 @@ namespace ApplicationView.Forms.Product
                 }
                 else
                 {
+
                     ProductBE be = new ProductBE()
                     {
                         ProductName = txtproductname.Text.Trim(),
@@ -387,7 +394,11 @@ namespace ApplicationView.Forms.Product
                     if (Isnuevo)
                         resp = _repo.Create(be);
                     else
-                        resp = _repo.Update(txtcode.Text.Trim(), be).ToString();
+                    {
+                        var lot = _repo.SearchExpiredProductByLotCode(txtlot.Text);
+                        if (lot)
+                            resp = _repo.Update(txtcode.Text.Trim(), be).ToString();
+                    }
 
                     if (!string.IsNullOrEmpty(resp))
                         MessageBox.Show(resp, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -401,6 +412,20 @@ namespace ApplicationView.Forms.Product
                     this.tabControl1.SelectedIndex = 0;
                 }
 
+            }
+            catch (ApiBusinessException ex)
+            {
+                if (ex.MessageError.Equals("Debe ingresar la fecha de vencimiento para ese lote"))
+                {
+                    MessageBox.Show(ex.MessageError, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dtTP.Value = DateTime.Now;
+                }
+                if (ex.MessageError.Equals("Esta vencido el producto para ese lote"))
+                {
+                    MessageBox.Show(ex.MessageError, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dtTP.Value = DateTime.Now;
+                }
+                
             }
             catch (Exception ex)
             {
@@ -445,7 +470,7 @@ namespace ApplicationView.Forms.Product
             this.txtproductcode.Text = product.ProductCode;
             this.txtSalePrice.Text = product.SalePrice.ToString();
             this.txtPurchasePrice.Text = product.PurchasePrice.ToString();
-            //this.dtTP.Value = product.Lots[0].ExpiredDate;
+            this.dtTP.Value = product.Lots.Count == 0 ? DateTime.Now : product.Lots[0].ExpiredDate;
             //this.txtlot.Text = product.Lots[0].LotCode;
             this.txtdescription.Text = product.Description;
             this.txtstock.Text = product.Stock.ToString();

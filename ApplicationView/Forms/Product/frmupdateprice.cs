@@ -33,29 +33,24 @@ namespace ApplicationView.Forms.Product
             if (cboptionupdate.Text.ToLower().Equals("Seleccionar opcion de actualizacion".ToLower()))
             {
                 this.groupBox2.Visible = false;
-                this.btnsave.Visible = false;
-                this.btncancel.Visible = false;
-                label2.Visible = false;
-                this.txtporcent.Visible = false;
-                this.Height = 170;
+                this.groupBox3.Visible = false;
+                this.Height = 130;
             }
             else if (cboptionupdate.Text.ToLower().Equals("Todos".ToLower()))
             {
                 this.groupBox2.Visible = false;
-                this.btnsave.Visible = true;
-                this.btncancel.Visible = true;
-                label2.Visible = true;
-                this.txtporcent.Visible = true;
-                this.Height = 170;
+                this.groupBox3.Visible = true;
+                this.Height = 290;
             }
             else
             {
                 this.groupBox2.Visible = true;
-                this.btnsave.Visible = false;
-                this.btncancel.Visible = false;
-                label2.Visible = false;
-                this.txtporcent.Visible = false;
-                this.Height = 709;
+                this.groupBox3.Visible = false;
+                this.groupBox2.Top = 90;
+                this.Height = 680;
+                this.txtperchaseprice.Enabled = false;
+                this.chkpurchase.Checked = false;
+                this.txtperchaseprice.BackColor = SystemColors.MenuBar;
                 this.LoadList();
             }
         }
@@ -65,11 +60,8 @@ namespace ApplicationView.Forms.Product
             if (cboptionupdate.Text.ToLower().Equals("Seleccionar opcion de actualizacion".ToLower()))
             {
                 this.groupBox2.Visible = false;
-                label2.Visible = false;
-                this.txtporcent.Visible = false;
-                this.btnsave.Visible = false;
-                this.btncancel.Visible = false;
-                this.Height = 170;
+                this.groupBox3.Visible = false;
+                this.Height = 130;
             }
         }
 
@@ -192,11 +184,32 @@ namespace ApplicationView.Forms.Product
                 txtporcent.Text = String.Empty;
                 txtporcent.Focus();
             }
+            else if (string.IsNullOrEmpty(this.txtperchaseprice.Text) && this.chkpurchase.Checked)
+            {
+                MessageBox.Show("Debe ingresar el porcentaje de aumento de precio de compra para ese producto", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtporcent.Text = String.Empty;
+                txtporcent.Focus();
+            }
             else
             {
-                string msg = _repo.UpdatePrices("", LoginInfo.IdAccount, Convert.ToDecimal(this.txtporcent.Text), UpdatePriceEnum.All);
+                decimal purchase = !string.IsNullOrEmpty(txtperchaseprice.Text) ? Convert.ToDecimal(txtperchaseprice.Text) : 0;
+                string msg = _repo.UpdatePrices("", LoginInfo.IdAccount, Convert.ToDecimal(this.txtporcent.Text), purchase, UpdatePriceEnum.All, this.chkpurchase.Checked);
                 MessageBox.Show(msg, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
+            }
+        }
+
+        private void chkpurchase_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkpurchase.Checked)
+            {
+                this.txtperchaseprice.Enabled = true;
+                this.txtperchaseprice.BackColor = SystemColors.Window;
+            }
+            else
+            {
+                this.txtperchaseprice.Enabled = false;
+                this.txtperchaseprice.BackColor = SystemColors.MenuBar;
             }
         }
     }

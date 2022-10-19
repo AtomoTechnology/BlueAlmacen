@@ -13,7 +13,8 @@ namespace DataModel.Repositories.IRepository
         Product SearchProducByCode(string codeRef);
         String Create(Product product);
         String Update(string id, Product product);
-        String UpdatePrices(string id, string accountId, decimal porcent, UpdatePriceEnum priceenum, bool ispurchaseprice = false);
+        Boolean SearchExpiredProductByLotCode(string lotCode);
+        String UpdatePrices(string id, string accountId, decimal porcentsale, decimal porcentpurchase, UpdatePriceEnum priceenum, bool ispurchaseprice = false);
         String Delete(string id);
     }
 }

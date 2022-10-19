@@ -114,7 +114,7 @@ namespace ApplicationView
 
                         frmchangepass pass = new frmchangepass(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease);
                         pass.Show();
-                        this.Hide();
+                        this.Close();
                     }
                     else
                     {

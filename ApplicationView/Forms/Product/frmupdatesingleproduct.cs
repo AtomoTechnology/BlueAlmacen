@@ -26,7 +26,7 @@ namespace ApplicationView.Forms.Product
 
             this.label3.Text = be.ProductName;
             this.lblTotal.Text = be.SalePrice.ToString();
-            this.label5.Text = be.PurchasePrice.ToString();
+            this.txtpurchaseprice.Text = be.PurchasePrice.ToString();
 
         }
 
@@ -43,16 +43,37 @@ namespace ApplicationView.Forms.Product
                 txtsaleprice.Text = String.Empty;
                 txtsaleprice.Focus();
             }
+            else if (string.IsNullOrEmpty(this.txtpurchaseprice.Text) && this.chkpurchase.Checked)
+            {
+                MessageBox.Show("Debe ingresar el porcentaje de aumento de precio de compra para ese producto", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtpurchaseprice.Text = String.Empty;
+                txtpurchaseprice.Focus();
+            }
             else
             {
-                this.msg = _repo.UpdatePrices(_be.Id, LoginInfo.IdAccount, Convert.ToDecimal(this.txtsaleprice.Text), UpdatePriceEnum.ForProduct, this.chkpurchase.Checked);                
+                decimal purchase = !string.IsNullOrEmpty(txtpurchaseprice.Text) ? Convert.ToDecimal(txtpurchaseprice.Text) : 0;
+                this.msg = _repo.UpdatePrices(_be.Id, LoginInfo.IdAccount, Convert.ToDecimal(this.txtsaleprice.Text), purchase, UpdatePriceEnum.ForProduct, this.chkpurchase.Checked);                
                 this.IsUpdateprice = true;
                 this.Close();
             }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {           
+        {
+            if (chkpurchase.Checked)
+            {
+                this.txtpurchaseprice.Enabled = true;
+                this.txtpurchaseprice.BackColor = SystemColors.Window;
+                this.txtpurchaseprice.Text = string.Empty;
+                this.label6.Text = "Porcentaje de compra";
+            }
+            else
+            {
+                this.txtpurchaseprice.Enabled = false;
+                this.txtpurchaseprice.BackColor = SystemColors.MenuBar;
+                this.txtpurchaseprice.Text = _be.PurchasePrice.ToString();
+                this.label6.Text = "Precio de  compra actual";
+            }
         }
     }
 }

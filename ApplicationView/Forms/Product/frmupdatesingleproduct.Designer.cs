@@ -39,7 +39,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.chkpurchase = new System.Windows.Forms.CheckBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.txtpurchaseprice = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label2
@@ -56,9 +56,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(24, 163);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 20);
+            this.label1.Size = new System.Drawing.Size(139, 20);
             this.label1.TabIndex = 7;
-            this.label1.Text = "Porcentaje";
+            this.label1.Text = "Porcentaje de venta";
             // 
             // txtsaleprice
             // 
@@ -144,21 +144,22 @@
             this.chkpurchase.UseVisualStyleBackColor = true;
             this.chkpurchase.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // label5
+            // txtpurchaseprice
             // 
-            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label5.Location = new System.Drawing.Point(354, 123);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(137, 20);
-            this.label5.TabIndex = 25;
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.txtpurchaseprice.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.txtpurchaseprice.Enabled = false;
+            this.txtpurchaseprice.Location = new System.Drawing.Point(355, 123);
+            this.txtpurchaseprice.Name = "txtpurchaseprice";
+            this.txtpurchaseprice.Size = new System.Drawing.Size(137, 27);
+            this.txtpurchaseprice.TabIndex = 25;
+            this.txtpurchaseprice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // frmupdatesingleproduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(504, 242);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtpurchaseprice);
             this.Controls.Add(this.chkpurchase);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -195,6 +196,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox chkpurchase;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtpurchaseprice;
     }
 }

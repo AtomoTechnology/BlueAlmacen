@@ -29,9 +29,14 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.chkpurchase = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtperchaseprice = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.btncancel = new System.Windows.Forms.Button();
             this.btnsave = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtporcent = new System.Windows.Forms.TextBox();
             this.cboptionupdate = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -50,6 +55,7 @@
             this.PurchasePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SalePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataList)).BeginInit();
@@ -57,22 +63,82 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btncancel);
-            this.groupBox1.Controls.Add(this.btnsave);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.txtporcent);
+            this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.cboptionupdate);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(5, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(819, 111);
+            this.groupBox1.Size = new System.Drawing.Size(819, 207);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Accion de actualizacion";
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.chkpurchase);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.txtperchaseprice);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.btncancel);
+            this.groupBox3.Controls.Add(this.btnsave);
+            this.groupBox3.Controls.Add(this.txtporcent);
+            this.groupBox3.Location = new System.Drawing.Point(12, 67);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(792, 134);
+            this.groupBox3.TabIndex = 21;
+            this.groupBox3.TabStop = false;
+            // 
+            // chkpurchase
+            // 
+            this.chkpurchase.AutoSize = true;
+            this.chkpurchase.Location = new System.Drawing.Point(547, 63);
+            this.chkpurchase.Name = "chkpurchase";
+            this.chkpurchase.Size = new System.Drawing.Size(18, 17);
+            this.chkpurchase.TabIndex = 26;
+            this.chkpurchase.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkpurchase.UseVisualStyleBackColor = true;
+            this.chkpurchase.CheckedChanged += new System.EventHandler(this.chkpurchase_CheckedChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(10, 63);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(260, 20);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "¿Deseas actualizar precio de compra?";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 95);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(154, 20);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Porcentaje de compra";
+            // 
+            // txtperchaseprice
+            // 
+            this.txtperchaseprice.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.txtperchaseprice.Enabled = false;
+            this.txtperchaseprice.Location = new System.Drawing.Point(307, 92);
+            this.txtperchaseprice.Name = "txtperchaseprice";
+            this.txtperchaseprice.Size = new System.Drawing.Size(258, 27);
+            this.txtperchaseprice.TabIndex = 21;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 23);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(139, 20);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Porcentaje de venta";
+            // 
             // btncancel
             // 
-            this.btncancel.Location = new System.Drawing.Point(662, 72);
+            this.btncancel.Location = new System.Drawing.Point(629, 95);
             this.btncancel.Name = "btncancel";
             this.btncancel.Size = new System.Drawing.Size(151, 29);
             this.btncancel.TabIndex = 20;
@@ -82,7 +148,7 @@
             // 
             // btnsave
             // 
-            this.btnsave.Location = new System.Drawing.Point(505, 72);
+            this.btnsave.Location = new System.Drawing.Point(629, 56);
             this.btnsave.Name = "btnsave";
             this.btnsave.Size = new System.Drawing.Size(151, 29);
             this.btnsave.TabIndex = 19;
@@ -90,18 +156,9 @@
             this.btnsave.UseVisualStyleBackColor = true;
             this.btnsave.Click += new System.EventHandler(this.btnsave_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(22, 74);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(78, 20);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Porcentaje";
-            // 
             // txtporcent
             // 
-            this.txtporcent.Location = new System.Drawing.Point(216, 74);
+            this.txtporcent.Location = new System.Drawing.Point(307, 20);
             this.txtporcent.Name = "txtporcent";
             this.txtporcent.Size = new System.Drawing.Size(258, 27);
             this.txtporcent.TabIndex = 2;
@@ -134,7 +191,7 @@
             // 
             this.groupBox2.Controls.Add(this.groupBox5);
             this.groupBox2.Controls.Add(this.dataList);
-            this.groupBox2.Location = new System.Drawing.Point(5, 121);
+            this.groupBox2.Location = new System.Drawing.Point(5, 208);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(819, 535);
             this.groupBox2.TabIndex = 4;
@@ -284,7 +341,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(828, 662);
+            this.ClientSize = new System.Drawing.Size(828, 750);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -297,6 +354,8 @@
             this.Load += new System.EventHandler(this.frmupdateprice_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataList)).EndInit();
@@ -327,5 +386,10 @@
         private System.Windows.Forms.Button btnFirst;
         private System.Windows.Forms.Button btncancel;
         private System.Windows.Forms.Button btnsave;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtperchaseprice;
+        private System.Windows.Forms.CheckBox chkpurchase;
+        private System.Windows.Forms.Label label7;
     }
 }

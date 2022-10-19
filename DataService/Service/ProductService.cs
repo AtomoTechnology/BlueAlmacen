@@ -77,6 +77,19 @@ namespace DataService.Service
             }
         }
 
+        public bool SearchExpiredProductByLotCode(string lotCode)
+        {
+            try
+            {
+                var entities = _repo.SearchExpiredProductByLotCode(lotCode);
+                return entities;
+            }
+            catch (Exception ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
+        }
+
         public ProductBE SearchProducByCode(string codeRef)
         {
             try
@@ -104,11 +117,11 @@ namespace DataService.Service
             }
         }
 
-        public string UpdatePrices(string id, string accountId, decimal porcent, UpdatePriceEnum priceenum, bool ispurchaseprice = false)
+        public string UpdatePrices(string id, string accountId, decimal porcentsale, decimal porcentpurchase, UpdatePriceEnum priceenum, bool ispurchaseprice = false)
         {
             try
             {
-                var entities = _repo.UpdatePrices(id, accountId, porcent, priceenum, ispurchaseprice);
+                var entities = _repo.UpdatePrices(id, accountId, porcentsale, porcentpurchase, priceenum, ispurchaseprice);
                 return entities;
             }
             catch (Exception ex)

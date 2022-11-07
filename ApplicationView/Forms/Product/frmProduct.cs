@@ -130,7 +130,7 @@ namespace ApplicationView.Forms.Product
         {
             if (!this.txtsearch.Text.Trim().Equals(""))
             {
-                this.dataList.DataSource = _repo.GetAll(1, 1, 12, "Id", "asc", this.txtsearch.Text.Trim(), ref count);
+                this.dataList.DataSource = _repo.GetAll(1, LoginInfo.pageactual, 12, "Id", "asc", this.txtsearch.Text.Trim(), ref count);
                 this.GetPagination();
             }
             else

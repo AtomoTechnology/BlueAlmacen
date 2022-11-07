@@ -19,9 +19,10 @@ namespace ApplicationView.Forms.Account
         private readonly ISaleService _repoSale;
         private readonly ISaleDetailService _repoSaleDetail;
         private readonly IIncreasePriceAfterTwelveService _repoIncrease;
+        private readonly IUserService _repoUser;
         public frmchangepass(IAccountService repo, IRoleService repoRole, IBusnessService repoBusiness, ICategoryService repoCategory,
             IProviderService repoProvider, IProductService repoProduct, ISaleService repoSale, ISaleDetailService repoSaleDetail,
-            IIncreasePriceAfterTwelveService repoIncrease)
+            IIncreasePriceAfterTwelveService repoIncrease, IUserService repoUser)
         {
             InitializeComponent();
             _repo = repo;
@@ -33,6 +34,7 @@ namespace ApplicationView.Forms.Account
             _repoSale = repoSale;
             _repoSaleDetail = repoSaleDetail;
             _repoIncrease = repoIncrease;
+            _repoUser = repoUser;
         }
 
         private void btnacept_Click(object sender, EventArgs e)
@@ -84,16 +86,16 @@ namespace ApplicationView.Forms.Account
                     };
                     var result = _repo.ChangePassword(be);
                     if (!string.IsNullOrEmpty(result))
-                        MessageBox.Show(result, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
-                    frmPrincipal frm = ((frmPrincipal)this.MdiParent);
-                    if (frm != null)
                     {
-                        frm.Close();
+                        LoginInfo.isChangePass = true;
+                        MessageBox.Show(result, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    //Application.Restart();
-                    frmlogin frmlog = new frmlogin(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease);
-                    this.Hide();
+                    
+                    frmPrincipal frm = new frmPrincipal(null, null, null, null, null, null, null, null, null, null, null);
+                    frm.Close();
+
+                    frmlogin frmlog = new frmlogin(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease, _repoUser);
+                    this.Close();
                     frmlog.ShowDialog();
                 }
             }
@@ -110,11 +112,17 @@ namespace ApplicationView.Forms.Account
         private void btncancel_Click(object sender, EventArgs e)
         {
             Application.EnableVisualStyles();
-            var result = MessageBox.Show("Debes cambiar la contraseña.\nEsta seguro que desees salir del sistema?", "Sistema de ventas",
-            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = new DialogResult();
+            if (LoginInfo.isChangeCancelPass)
+                result = MessageBox.Show("Debes cambiar la contraseña.\nEsta seguro que desees salir del sistema?", "Sistema de ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            else
+                result = MessageBox.Show("Esta seguro que desees salir sin cambiar la contraseña?", "Sistema de ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
             if (result == DialogResult.Yes)
             {
-                Application.Exit();
+                if (LoginInfo.isChangeCancelPass)
+                    Application.Exit();
+                this.Close();
             }
         }
     }

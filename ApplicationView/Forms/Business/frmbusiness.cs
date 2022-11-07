@@ -3,12 +3,9 @@ using ApplicationView.VariableSeesion;
 using BusnessEntities.BE;
 using DataService.Iservice;
 using Resolver.Enums;
+using Resolver.HelperError.IExceptions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ApplicationView.Forms.Business
@@ -26,9 +23,9 @@ namespace ApplicationView.Forms.Business
         }
         private void LoadList()
         {
-            this.dataList.DataSource = _repo.GetAll(1, 1, 12, "Id", "asc", "", ref count);
+            this.dataList.DataSource = _repo.GetAll(1, LoginInfo.pageactual, LoginInfo.pagesize, "Id", "asc", "", ref count);
             this.HideColumn();
-            this.GetPagination();
+            this.GetPagination(Convert.ToInt32(dataList.Rows.Count));
         }
 
         private void frmbusiness_Load(object sender, EventArgs e)
@@ -161,8 +158,8 @@ namespace ApplicationView.Forms.Business
         {
             if (!this.txtsearch.Text.Trim().Equals(""))
             {
-                this.dataList.DataSource = _repo.GetAll(1, 1, 12, "Id", "asc", this.txtsearch.Text.Trim(), ref count);
-                this.GetPagination();
+                this.dataList.DataSource = _repo.GetAll(1, LoginInfo.pageactual, LoginInfo.pagesize, "Id", "asc", this.txtsearch.Text.Trim(), ref count);
+                this.GetPagination(Convert.ToInt32(dataList.Rows.Count));
             }
             else
                 this.LoadList();
@@ -232,6 +229,10 @@ namespace ApplicationView.Forms.Business
                 }
                 else
                     MessageBox.Show("Debe chequear el checkbox eliminar, si deseas eliminar uno o mas registro", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ApiBusinessException ex)
+            {
+                MessageBox.Show(ex.MessageError, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
@@ -371,6 +372,10 @@ namespace ApplicationView.Forms.Business
                 }
 
             }
+            catch (ApiBusinessException ex)
+            {
+                MessageBox.Show(ex.MessageError, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -406,9 +411,9 @@ namespace ApplicationView.Forms.Business
             LoadList();
         }
 
-        private void GetPagination()
+        private void GetPagination(int quantity)
         {
-            if (count > 0)
+            if (quantity > 0)
             {
                 LoginInfo.pageamount = count;
                 LoginInfo.page = Math.Ceiling(LoginInfo.pageamount / LoginInfo.pagesize);

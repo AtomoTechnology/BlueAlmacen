@@ -10,5 +10,6 @@ namespace DataModel.Entities
         public String CategoryName { get; set; }
         public String Description { get; set; }
         public Account Account { get; set; }
+        public List<SubCategory> SubCategories { get; set; }
     }
 }

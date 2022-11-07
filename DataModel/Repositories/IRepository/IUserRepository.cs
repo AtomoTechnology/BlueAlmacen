@@ -11,7 +11,7 @@ namespace DataModel.Repositories.IRepository
         List<User> GetAll(int state, int page, int top, string orderBy, string ascending, ref int count);
         User GetById(string id);
         String Create(User user);
-        Boolean Update(string id, User user);
+        String Update(string id, User user);
         Boolean Delete(string id);
     }
 }

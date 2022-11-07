@@ -36,21 +36,25 @@ namespace DataModel.Repositories.Repository
                     throw new ApiBusinessException("1000", "Debe ingresar el nombre usuario", System.Net.HttpStatusCode.NotFound, "Http");
                 if (String.IsNullOrEmpty(user.Accounts[0].UserPass))
                     throw new ApiBusinessException("1000", "Debe ingresar la contraseña usuario", System.Net.HttpStatusCode.NotFound, "Http");
-
-                foreach (var item in user.Accounts)
-                {
-                    item.Id = Guid.NewGuid().ToString();
-                    item.CreatedDate = DateTime.Now;
-                    item.state = (Int32)StateEnum.Activeted;
-                }
+                var isAccountExist = _context.Accounts.Where(u => u.UserName == user.Accounts[0].UserName).ToList();
+                if (isAccountExist.Any()) 
+                    throw new ApiBusinessException("1000", "Ya existe un usuario con ese nombre", System.Net.HttpStatusCode.NotFound, "Http");
 
                 user.Id = Guid.NewGuid().ToString();
                 user.CreatedDate = DateTime.Now;
                 user.state = (Int32)StateEnum.Activeted;
 
+                foreach (var item in user.Accounts)
+                {
+                    item.UserId = user.Id;
+                    item.Id = Guid.NewGuid().ToString();
+                    item.CreatedDate = DateTime.Now;
+                    item.state = (Int32)StateEnum.Activeted;
+                }
+
                 _context.Add(user);
                 _context.SaveChanges();
-               return user.Id;
+               return "EL usuario fue creado con existo.";
             }
             catch (Exception ex)
             {
@@ -74,7 +78,7 @@ namespace DataModel.Repositories.Repository
                 entity.FinalDate = DateTime.Now;
                 entity.state = (Int32)StateEnum.Deleted;
 
-                _context.Add(entity);
+                //_context.Add(entity);
                 _context.SaveChanges();
                 return true;
             }
@@ -120,7 +124,7 @@ namespace DataModel.Repositories.Repository
             }
         }
 
-        public Boolean Update(string id, User user)
+        public string Update(string id, User user)
         {
             try
             {
@@ -136,7 +140,7 @@ namespace DataModel.Repositories.Repository
 
                 _context.SaveChanges();
 
-                return true;
+                return "El usuario fue modificado con exito" ;
             }
             catch (Exception ex)
             {

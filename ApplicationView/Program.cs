@@ -5,6 +5,7 @@ using ApplicationView.Forms.Product;
 using ApplicationView.Forms.Provider;
 using ApplicationView.Forms.Roles;
 using ApplicationView.Forms.Sale;
+using ApplicationView.Forms.User;
 using DataModel.Context;
 using DataModel.Repositories.IRepository;
 using DataModel.Repositories.Repository;
@@ -45,9 +46,11 @@ namespace ApplicationView
         public static IServiceProvider ServiceProvider { get; private set; }
         static IHostBuilder CreateHostBuilder()
         {
+           
+
             return Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) => {
-                    services.AddDbContext<DbGestionStockContext>(options => options.UseSqlServer(ConfigurationManager.ConnectionStrings["myConnectionString"].ConnectionString));
+                    services.AddDbContext<DbGestionStockContext>(options => options.UseSqlServer(GetString()));
                     services.AddScoped<frmrole>();
                     services.AddScoped<frmlogin>();
                     services.AddScoped<frmbusiness>();
@@ -55,8 +58,9 @@ namespace ApplicationView
                     services.AddScoped<frmprovider>();
                     services.AddScoped<frmProduct>();
                     services.AddScoped<frmIncreasePriceAfterTwelve>();
-                    
-                        //services.AddEntityFrameworkS<DbGestionStockContext>();
+                    services.AddScoped<frmusr>();
+
+                    //services.AddEntityFrameworkS<DbGestionStockContext>();
 
                     services.AddScoped<IRoleRepository, RoleRepository>();
                     services.AddScoped<IBusinessRepository, BusinessRepository>();
@@ -67,6 +71,7 @@ namespace ApplicationView
                     services.AddScoped<ISaleRepository, SaleRepository>();
                     services.AddScoped<ISaleDetailRepoository, SaleDetailRepoository>();
                     services.AddScoped<IIncreasePriceAfterTwelveRepository, IncreasePriceAfterTwelveRepository>();
+                    services.AddScoped<IUserRepository, UserRepository>();
 
                     services.AddScoped<IRoleService, RoleService>();
                     services.AddScoped<IBusnessService, BusnessService>();
@@ -77,10 +82,18 @@ namespace ApplicationView
                     services.AddScoped<ISaleService, SaleService>();
                     services.AddScoped<ISaleDetailService, SaleDetailService>();
                     services.AddScoped<IIncreasePriceAfterTwelveService, IncreasePriceAfterTwelveService>();
+                    services.AddScoped<IUserService, UserService>();
 
                 });
         }
-
+        private static String GetString()
+        {
+            var builder = new ConfigurationBuilder()
+                 .AddJsonFile("appsetting.json", optional: false, reloadOnChange: true);
+            var configuration = builder.Build();
+            var logFile = configuration["ConnectionStrings:DefaultConnection"];
+            return logFile;
+        }
         private static void UpdateDataBase(IServiceProvider serviceScopp)
         {
             using (var contex = serviceScopp.GetService<DbGestionStockContext>())

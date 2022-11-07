@@ -26,9 +26,10 @@ namespace ApplicationView
         private readonly ISaleService _repoSale;
         private readonly ISaleDetailService _repoSaleDetail;
         private readonly IIncreasePriceAfterTwelveService _repoIncrease;
+        private readonly IUserService _repoUser;
         public frmlogin(IAccountService repo, IRoleService repoRole, IBusnessService repoBusiness, ICategoryService repoCategory,
             IProviderService repoProvider, IProductService repoProduct, ISaleService repoSale, ISaleDetailService repoSaleDetail,
-            IIncreasePriceAfterTwelveService repoIncrease)
+            IIncreasePriceAfterTwelveService repoIncrease, IUserService repoUser)
         {
             InitializeComponent();
             _repo = repo;
@@ -40,6 +41,7 @@ namespace ApplicationView
             _repoSale = repoSale;
             _repoSaleDetail = repoSaleDetail;
             _repoIncrease = repoIncrease;
+            _repoUser  = repoUser;
 
             if (LoginInfo.ischange == true)
             {
@@ -112,9 +114,10 @@ namespace ApplicationView
                         LoginInfo.Access = Datos?.Role?.RoleName;
                         LoginInfo.IdBusiness = be?.Id;
 
-                        frmchangepass pass = new frmchangepass(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease);
+                        LoginInfo.isChangeCancelPass = true;
+                        frmchangepass pass = new frmchangepass(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease, _repoUser);
                         pass.Show();
-                        this.Close();
+                        //this.Close();
                     }
                     else
                     {
@@ -125,8 +128,9 @@ namespace ApplicationView
                         LoginInfo.Pass = Datos.UserPass;
                         LoginInfo.Access = Datos?.Role?.RoleName;
                         LoginInfo.IdBusiness = be?.Id;
+                        LoginInfo.isChangeCancelPass = false;
 
-                        frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease, _repo); 
+                        frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease, _repo, _repoUser);
 
                         principal.Show();
                         this.Hide();

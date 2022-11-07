@@ -5,6 +5,7 @@ using ApplicationView.Forms.Product;
 using ApplicationView.Forms.Provider;
 using ApplicationView.Forms.Roles;
 using ApplicationView.Forms.Sale;
+using ApplicationView.Forms.User;
 using ApplicationView.VariableSeesion;
 using BusnessEntities.BE;
 using DataService.Iservice;
@@ -30,9 +31,10 @@ namespace ApplicationView.Forms.Account
         private readonly ISaleDetailService _repoSaleDetail;
         private readonly IIncreasePriceAfterTwelveService _repoIncrease;
         private readonly IAccountService _repoAccount;
+        private readonly IUserService _repoUser;
         public frmPrincipal(AccountBE be, IRoleService repo, IBusnessService repoBusiness, ICategoryService repoCategory,
             IProviderService repoProvider, IProductService repoProduct, ISaleService repoSale, ISaleDetailService repoSaleDetail,
-            IIncreasePriceAfterTwelveService repoIncrease, IAccountService repoAccount)
+            IIncreasePriceAfterTwelveService repoIncrease, IAccountService repoAccount, IUserService repoUser)
         {
             InitializeComponent();
             this._be = be;
@@ -45,6 +47,7 @@ namespace ApplicationView.Forms.Account
             _repoSaleDetail = repoSaleDetail;
             _repoIncrease = repoIncrease;
             _repoAccount = repoAccount;
+            _repoUser = repoUser;
 
             this.Text = ("Bienvenido al sistema de ventas y de gestiones de stock" + "     " + "Usuario: " + LoginInfo.UserName).PadLeft(140);
             this.BackColor = Color.AliceBlue;
@@ -52,7 +55,9 @@ namespace ApplicationView.Forms.Account
 
         private void crearUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
+            frmusr frm = new frmusr(_repoUser, _repo);
+            frm.MdiParent = this;
+            frm.Show();            
         }
 
         private void roleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -158,7 +163,7 @@ namespace ApplicationView.Forms.Account
                     e.Cancel = true;
                 else
                 {
-                    frmlogin frm = new frmlogin(_repoAccount,_repo, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease);
+                    frmlogin frm = new frmlogin(_repoAccount,_repo, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease, _repoUser);
                     frm.groupBox1.Text = "Cambiar sessión";
                     frm.Show();
                 }
@@ -183,32 +188,32 @@ namespace ApplicationView.Forms.Account
         {
             if (LoginInfo.Access.ToLower() == ("Admin").ToLower())
             {
-                this.ingresoToolStripMenuItem.Enabled = true;
-                this.saleToolStripMenuItem.Enabled = true;
-                this.consultarStockToolStripMenuItem.Enabled = false;
-                this.consultaToolStripMenuItem.Enabled = false;
-                this.promoToolStripMenuItem.Enabled = false;
-                this.egresoToolStripMenuItem.Enabled = true;
-                this.productosToolStripMenuItem.Enabled = true;
-                this.vencimientoToolStripMenuItem.Enabled = false;
-                this.movimientoToolStripMenuItem.Enabled = false;
-                this.reportesToolStripMenuItem.Enabled = false;
-                this.gestionDeUsuarioToolStripMenuItem.Enabled = false;
-                this.crearUsuarioToolStripMenuItem.Enabled = true;
-                this.cambiarContraseñaToolStripMenuItem.Enabled = true;
-                this.gestionarProveedorToolStripMenuItem.Enabled = true;
-                this.proveedorToolStripMenuItem.Enabled = true;
-                this.gestionDeCajaToolStripMenuItem.Enabled = false;
-                this.abreCajaToolStripMenuItem.Enabled = false;
-                this.seguridadToolStripMenuItem.Enabled = true;
-                this.roleToolStripMenuItem.Enabled = false;
-                this.backupToolStripMenuItem.Enabled = false;
-                this.historialToolStripMenuItem.Enabled = false;
-                this.formaDePagoToolStripMenuItem.Enabled = false;
-                this.gestionarNegocioToolStripMenuItem.Enabled = true;
-                this.categoriaToolStripMenuItem.Enabled = true;
-                this.incrementoDespuesDeLas12PMToolStripMenuItem.Enabled = true;
-                this.actualizarPrecioDeProductoToolStripMenuItem.Enabled = true;
+                //this.ingresoToolStripMenuItem.Enabled = true;
+                //this.saleToolStripMenuItem.Enabled = true;
+                //this.consultarStockToolStripMenuItem.Enabled = false;
+                //this.consultaToolStripMenuItem.Enabled = false;
+                //this.promoToolStripMenuItem.Enabled = false;
+                //this.egresoToolStripMenuItem.Enabled = true;
+                //this.productosToolStripMenuItem.Enabled = true;
+                //this.vencimientoToolStripMenuItem.Enabled = false;
+                //this.movimientoToolStripMenuItem.Enabled = false;
+                //this.reportesToolStripMenuItem.Enabled = false;
+                //this.gestionDeUsuarioToolStripMenuItem.Enabled = false;
+                //this.crearUsuarioToolStripMenuItem.Enabled = true;
+                //this.cambiarContraseñaToolStripMenuItem.Enabled = true;
+                //this.gestionarProveedorToolStripMenuItem.Enabled = true;
+                //this.proveedorToolStripMenuItem.Enabled = true;
+                //this.gestionDeCajaToolStripMenuItem.Enabled = false;
+                //this.abreCajaToolStripMenuItem.Enabled = false;
+                //this.seguridadToolStripMenuItem.Enabled = true;
+                //this.roleToolStripMenuItem.Enabled = false;
+                //this.backupToolStripMenuItem.Enabled = false;
+                //this.historialToolStripMenuItem.Enabled = false;
+                //this.formaDePagoToolStripMenuItem.Enabled = false;
+                //this.gestionarNegocioToolStripMenuItem.Enabled = true;
+                //this.categoriaToolStripMenuItem.Enabled = true;
+                //this.incrementoDespuesDeLas12PMToolStripMenuItem.Enabled = true;
+                //this.actualizarPrecioDeProductoToolStripMenuItem.Enabled = true;
             }
             else if (LoginInfo.Access.ToLower() == ("Empleado(a)").ToLower())
             {
@@ -284,8 +289,9 @@ namespace ApplicationView.Forms.Account
 
         private void cambiarContraseñaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //frmchangepass pass = new frmchangepass(_repoAccount, _repo, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease);
-            //pass.Show();
+            frmchangepass pass = new frmchangepass(_repoAccount, _repo, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease, _repoUser);
+            LoginInfo.isChangeCancelPass = false;
+            pass.Show();
             //this.Close();
         }
     }

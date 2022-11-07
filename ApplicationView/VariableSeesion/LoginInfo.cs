@@ -14,10 +14,12 @@ namespace ApplicationView.VariableSeesion
         public static string Role;
         public static string Access;
         public static Boolean ischange = false;
+        public static Boolean isChangePass = false;
+        public static Boolean isChangeCancelPass = true;
         public static Boolean changesession = false;
         public static string Pass;
-        public static Int32 pagesize = 2;
-        public static Decimal pageamount = 0;
+        public static Int32 pagesize = 10;
+        public static Decimal pageamount = 2;
         public static Decimal page = 0;
         public static Int32 pageactual = 1;
         public static Int32 skipamount = 1;

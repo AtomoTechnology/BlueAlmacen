@@ -22,6 +22,9 @@
     <Compile Update="Forms\Configurations\frmIncreasePriceAfterTwelve.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\Loading\frmloading.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\Product\frmProduct.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -40,6 +43,9 @@
     <Compile Update="Forms\Roles\frmrole.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\Roles\frmrolelist.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\Sale\frmautorizedeleteproductsale.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -47,6 +53,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\Sale\frmsale.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\User\frmusr.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

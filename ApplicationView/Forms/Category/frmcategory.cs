@@ -26,9 +26,9 @@ namespace ApplicationView.Forms.Category
         private void LoadList()
         {
 
-            this.dataList.DataSource = _repo.GetAll(1, 1, 12, "Id", "asc", "", ref count);
+            this.dataList.DataSource = _repo.GetAll(1, LoginInfo.pageactual, LoginInfo.pagesize, "Id", "asc", "", ref count);
             this.HideColumn();
-            this.GetPagination();
+            this.GetPagination(Convert.ToInt32(dataList.Rows.Count));
         }
         private void HideColumn()
         {
@@ -37,10 +37,11 @@ namespace ApplicationView.Forms.Category
             this.dataList.Columns["State"].Visible = false;
             this.dataList.Columns["Account"].Visible = false;
             this.dataList.Columns["FinalDate"].Visible = false;
+            this.dataList.Columns["ModifiedDate"].Visible = false;
         }
-        private void GetPagination()
+        private void GetPagination(int quantity)
         {
-            if (count > 0)
+            if (quantity > 0)
             {
                 LoginInfo.pageamount = count;
                 LoginInfo.page = Math.Ceiling(LoginInfo.pageamount / LoginInfo.pagesize);
@@ -76,8 +77,8 @@ namespace ApplicationView.Forms.Category
         {
             if (!this.txtsearch.Text.Trim().Equals(""))
             {
-                this.dataList.DataSource = _repo.GetAll(1, 1, 12, "Id", "asc", this.txtsearch.Text.Trim(), ref count);
-                this.GetPagination();
+                this.dataList.DataSource = _repo.GetAll(1, LoginInfo.pageactual, LoginInfo.pagesize, "Id", "asc", this.txtsearch.Text.Trim(), ref count);
+                this.GetPagination(Convert.ToInt32(dataList.Rows.Count));
             }
             else
                 this.LoadList();
@@ -324,6 +325,30 @@ namespace ApplicationView.Forms.Category
             this.btnnew.Enabled = false;
             this.btnsave.Text = "Modificar";
             this.tabControl1.SelectedIndex = 1;
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            ShareMethod.GetInstance().goFirst();
+            LoadList();
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            ShareMethod.GetInstance().goPrevious();
+            LoadList();
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            ShareMethod.GetInstance().goNext();
+            LoadList();
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            ShareMethod.GetInstance().goLast(this.count);
+            LoadList();
         }
     }
 }

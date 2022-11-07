@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmlogin));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -90,7 +91,6 @@
             this.txtuserpass.PasswordChar = '*';
             this.txtuserpass.Size = new System.Drawing.Size(182, 27);
             this.txtuserpass.TabIndex = 3;
-            this.txtuserpass.Text = "sanlorenzo";
             // 
             // txtusername
             // 
@@ -99,7 +99,6 @@
             this.txtusername.Name = "txtusername";
             this.txtusername.Size = new System.Drawing.Size(182, 27);
             this.txtusername.TabIndex = 2;
-            this.txtusername.Text = "almacen";
             // 
             // label2
             // 
@@ -177,6 +176,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmlogin";

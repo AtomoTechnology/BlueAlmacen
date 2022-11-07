@@ -2,6 +2,7 @@
 using DataModel.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 
@@ -31,15 +32,17 @@ namespace DataModel.Context
         public DbSet<Lot> Lots { get; set; }
         public DbSet<History> Histories { get; set; }
         public DbSet<HistoryPrice> HistoryPrices { get; set; }
-        
+        public DbSet<SubCategory> SubCategories { get; set; }
+
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            var sqlcnn = ConfigurationManager.ConnectionStrings["myConnectionString"].ConnectionString;
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.
-               UseSqlServer("data source=DESKTOP-KOS4DK0\\PRADE;initial catalog=bluedbventa_db;user id=sa;password=516euge94324590;MultipleActiveResultSets=True;");
+               UseSqlServer(sqlcnn);
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -68,6 +71,7 @@ namespace DataModel.Context
             new CategoryConfiguration(modelBuilder.Entity<Category>());
             new IncreasePriceAfterTwelveConfiguration(modelBuilder.Entity<IncreasePriceAfterTwelve>());
             new HistoryConfiguration(modelBuilder.Entity<History>());
+            new SubCategoryConfiguration(modelBuilder.Entity<SubCategory>());
         }
     }
 }

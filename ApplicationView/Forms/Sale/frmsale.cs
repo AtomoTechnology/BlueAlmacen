@@ -3,6 +3,7 @@ using BusnessEntities.BE;
 using BusnessEntities.Dtos;
 using DataService.Iservice;
 using Resolver.Enums;
+using Resolver.Helper;
 using Resolver.HelperError.IExceptions;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace ApplicationView.Forms.Sale
             _repoAccount = repoAccount;
 
             this.HideColumn();
-            this.SetGrid();
+            DataListHelper.SetGrid(this.dataList, 22);
             this.btnpay.Enabled = false;
 
         }
@@ -50,29 +51,7 @@ namespace ApplicationView.Forms.Sale
             this.dataList.Columns["SaleId"].Visible = false;
             this.dataList.Columns["InvoiceCode"].Visible = false;
             
-        }
-
-        private void SetGrid()
-        {
-            this.dataList.DefaultCellStyle.Font = new Font("Microsoft Sans Serif", 18);
-
-            this.dataList.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            this.dataList.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            this.dataList.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            this.dataList.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            this.dataList.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            this.dataList.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-
-            this.dataList.EnableHeadersVisualStyles = false;
-
-            DataGridViewCellStyle column_header_cell_style = new DataGridViewCellStyle();
-            column_header_cell_style.BackColor = ColorTranslator.FromHtml("#bfdbff");
-            column_header_cell_style.ForeColor = Color.Black;
-            //column_header_cell_style.SelectionBackColor = Color.Chocolate;
-            column_header_cell_style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            column_header_cell_style.Font = new Font("#bfdbff", 22, FontStyle.Bold);
-            this.dataList.ColumnHeadersDefaultCellStyle = column_header_cell_style;
-        }
+        }       
         private void Frmsale_Shown(object sender, EventArgs e)
         {
             txtreadcode.Focus();
@@ -80,22 +59,23 @@ namespace ApplicationView.Forms.Sale
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verificar que la tecla presionada no sea CTRL u otra tecla no numerica
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-                return;
-            }
+            //// Verificar que la tecla presionada no sea CTRL u otra tecla no numerica
+            //if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            //{
+            //    e.Handled = true;
+            //    return;
+            //}
 
-            // Si deseas, puedes permitir numeros decimales (o float)
-            // If you want, you can allow decimal (float) numbers
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-                return;
-            }
+            //// Si deseas, puedes permitir numeros decimales (o float)
+            //// If you want, you can allow decimal (float) numbers
+            //if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            //{
+            //    e.Handled = true;
+            //    return;
+            //}
             try
             {
+                List<SaleDetailDto> list = new List<SaleDetailDto>();
                 if (e.KeyChar == (char)Keys.Enter)
                 {
                     var result = _repoProduct.SearchProducByCode(txtreadcode.Text.Trim());
@@ -132,7 +112,7 @@ namespace ApplicationView.Forms.Sale
                             }
                         };
 
-                        this.saleId = _repo.Create(be);
+                        list = _repo.Create(be);
                     }
                     else
                     {
@@ -146,24 +126,28 @@ namespace ApplicationView.Forms.Sale
                             quantity = 1,
                             SaleId = saleid.SaleId
                         };
-                        this.saleId = _repoSaleDetail.Create(be);
+                        this.saleId = be.SaleId;
+                        list = _repoSaleDetail.Create(be);
                     }
-                    var response = _repoSaleDetail.SearchAllDetailByCode(this.saleId);
+                    //var response = _repoSaleDetail.SearchAllDetailByCode(this.saleId);
                     txtreadcode.Text = String.Empty;
                     txtreadcode.Focus();
                     price = price + result.SalePrice;
 
-                    if (response != null)
-                        this.dataList.DataSource = response;
-                    this.productqquantity.Text = ((!string.IsNullOrEmpty(this.productqquantity.Text) ? Convert.ToInt32(this.productqquantity.Text) : 0) + 1).ToString();
-                    this.lblStatus.Text = price.ToString();
-                    this.InvoiceCodeFormat(response[0].InvoiceCode);
+                    if (list.Count > 0)
+                    {
+                        this.dataList.DataSource = list;
+                        this.saleId = ((SaleDetailDto)dataList.Rows[0].DataBoundItem).SaleId;
+                        this.productqquantity.Text = ((!string.IsNullOrEmpty(this.productqquantity.Text) ? Convert.ToInt32(this.productqquantity.Text) : 0) + 1).ToString();
+                        this.lblStatus.Text = price.ToString();
+                        this.InvoiceCodeFormat(list[0].InvoiceCode);
+                    }
 
                     this.dataList.FirstDisplayedScrollingRowIndex = (this.dataList.Rows.Count - 1);
                     if (this.dataList.Rows.Count > 0)
                     {
-                        this.HideColumn();
-                        this.SetGrid();
+                        this.HideColumn(); 
+                        DataListHelper.SetGrid(this.dataList, 22);
                         this.btnpay.Enabled = true;
                     }
                     this.dataList.ClearSelection();

@@ -10,6 +10,7 @@ namespace DataModel.Context
 {
     public partial class DbGestionStockContext : DbContext
     {
+        public static string sqlcnn = "";
         public DbGestionStockContext(DbContextOptions<DbGestionStockContext> options) : base(options)
         {
         }
@@ -38,7 +39,6 @@ namespace DataModel.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var sqlcnn = ConfigurationManager.ConnectionStrings["myConnectionString"].ConnectionString;
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.

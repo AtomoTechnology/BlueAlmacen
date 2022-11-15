@@ -90,11 +90,11 @@ namespace DataService.Service
             }
         }
 
-        public ProductBE SearchProducByCode(string codeRef)
+        public ProductBE SearchProducByCode(string codeRef, bool ischeckprice = false)
         {
             try
             {
-                var entities = _repo.SearchProducByCode(codeRef);
+                var entities = _repo.SearchProducByCode(codeRef, ischeckprice);
                 return ProductFactory.GetInstance().CreateBusiness(entities);
             }
             catch (Exception ex)

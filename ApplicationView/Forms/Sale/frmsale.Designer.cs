@@ -278,6 +278,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1773, 796);
             this.Controls.Add(this.txtcajeroname);
             this.Controls.Add(this.label7);

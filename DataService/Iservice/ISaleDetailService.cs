@@ -11,7 +11,7 @@ namespace DataService.Iservice
         List<SaleDetailBE> GetAll(int state, int page, int top, string orderBy, string ascending, string name, ref int count);
         List<SaleDetailDto> SearchAllDetailByCode(string saleCode);
         SaleDetailBE GetById(string id);
-        String Create(SaleDetailBE saleDetail);
+        List<SaleDetailDto> Create(SaleDetailBE saleDetail);
         String Update(string id, SaleDetailBE saleDetail);
         String Delete(string id);
     }

@@ -25,6 +25,9 @@
     <Compile Update="Forms\Loading\frmloading.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\Product\frmiexpiredDate.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\Product\frmProduct.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -47,6 +50,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\Sale\frmautorizedeleteproductsale.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Sale\frmcheckprice.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\Sale\frmclosepay.cs">

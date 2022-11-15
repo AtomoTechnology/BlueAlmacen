@@ -1,4 +1,6 @@
-﻿using BusnessEntities.BE;
+﻿using AutoMapper;
+using BusnessEntities.BE;
+using BusnessEntities.Dtos;
 using DataModel.Repositories.IRepository;
 using DataService.FactoryPatern;
 using DataService.Iservice;
@@ -13,9 +15,11 @@ namespace DataService.Service
     public class AccountService : IAccountService
     {
         private readonly IAccountRepository _repo;
-        public AccountService(IAccountRepository repo)
+        private readonly IMapper _maapper;
+        public AccountService(IAccountRepository repo, IMapper maapper)
         {
             _repo = repo;
+            _maapper = maapper;
         }
         public string ChangePassword(AccountBE be) 
         {
@@ -30,11 +34,11 @@ namespace DataService.Service
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
         }
-        public AccountBE Login(string username, string userpass) {
+        public AccountDTO Login(string username, string userpass) {
             try
             {
                 var entity = _repo.Login(username, PassValidation.GetInstance().Encypt(userpass));
-                return AccountFactory.GetInstance().CreateBusiness(entity);
+                return _maapper.Map<AccountDTO>(entity);
             }
             catch (Exception ex)
             {

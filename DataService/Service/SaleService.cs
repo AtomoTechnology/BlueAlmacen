@@ -1,4 +1,6 @@
-﻿using BusnessEntities.BE;
+﻿using AutoMapper;
+using BusnessEntities.BE;
+using BusnessEntities.Dtos;
 using DataModel.Repositories.IRepository;
 using DataService.FactoryPatern;
 using DataService.Iservice;
@@ -14,17 +16,37 @@ namespace DataService.Service
     public class SaleService : ISaleService
     {
         private readonly ISaleRepository _repo;
-        public SaleService(ISaleRepository repo)
+        private readonly IMapper _maapper;
+        public SaleService(ISaleRepository repo, IMapper maapper)
         {
             _repo = repo;
+            _maapper = maapper;
         }
-        public string Create(SaleBE sale)
+        public List<SaleDetailDto> Create(SaleBE sale)
         {
             try
             {
                 var result = SaleFactory.GetInstance().CreateEntity(sale);
-                var entity = _repo.Create(result);
-                return entity;
+                var entity = _repo.Create(result).ToList();
+                List<SaleDetailDto> dto = new List<SaleDetailDto>();
+                if (entity.Count > 0)
+                {
+                    foreach (var item in entity)
+                    {
+                        dto.Add(new SaleDetailDto()
+                        {
+                            SaleId = item.SaleId,
+                            Id = item.Id,
+                            SalePrice = item.SalePrice,
+                            productId = item.productId,
+                            ProductName = item.ProductName,
+                            quantity = item.quantity,
+                            InvoiceCode = item.InvoiceCode,
+                            ProductCode = item.ProductCode
+                        });
+                    }
+                }
+                return dto;
             }
             catch (Exception ex)
             {
@@ -49,6 +71,27 @@ namespace DataService.Service
                     }
                 }
                 return be;
+            }
+            catch (Exception ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
+        }
+
+        public List<SearchSaleSPDTO> GetAllSaleHistoric(DateTime datefrom, DateTime dateto)
+        {
+            try
+            {
+                var entity = _repo.GetAllSaleHistoric(datefrom, dateto).ToList();
+                List<SearchSaleSPDTO> dto = new List<SearchSaleSPDTO>();
+                if (entity.Count > 0)
+                {
+                    foreach (var item in entity)
+                    {
+                        dto.Add(_maapper.Map<SearchSaleSPDTO>(entity));
+                    }
+                }
+                return dto;
             }
             catch (Exception ex)
             {

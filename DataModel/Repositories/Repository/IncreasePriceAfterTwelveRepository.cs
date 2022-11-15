@@ -1,12 +1,15 @@
-﻿using DataModel.Context;
+﻿using Dapper;
+using DataModel.Context;
 using DataModel.Entities;
 using DataModel.Repositories.IRepository;
+using Microsoft.EntityFrameworkCore;
 using Resolver.Enums;
 using Resolver.HelperError.Handlers;
 using Resolver.HelperError.IExceptions;
 using Resolver.QueryableExtensions;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -69,18 +72,47 @@ namespace DataModel.Repositories.Repository
         {
             try
             {
-                var entities = _context.IncreasePriceAfterTwelves.Where(u => u.state == state && u.Account.User.BusinessId == BusinessId);
-                count = entities.Count();
-                var skipAmount = 0;
-                if (page > 0)
-                    skipAmount = top * (page - 1);
+                // var entities = _context.IncreasePriceAfterTwelves.Where(u => u.state == state && u.Account.User.BusinessId == BusinessId);
+                // count = entities.Count();
+                // var skipAmount = 0;
+                // if (page > 0)
+                //     skipAmount = top * (page - 1);
 
-                entities = entities
-               .OrderByPropertyOrField(orderBy, ascending)
-               .Skip(skipAmount)
-               .Take(top);
-
-                return entities.ToList();
+                // entities = entities
+                //.OrderByPropertyOrField(orderBy, ascending)
+                //.Skip(skipAmount)
+                //.Take(top);
+                using (var db = new DbGestionStockContext())
+                {
+                    using (var ctx = db.Database.GetDbConnection())
+                    {
+                        try
+                        {
+                            ctx.Open();
+                            var values = new
+                            {
+                                BusinessId = BusinessId
+                            };
+                            List<IncreasePriceAfterTwelve> entity = ctx.Query<IncreasePriceAfterTwelve>("[dbo].[Sp_IncreasePriceAfterTwelves]", values, commandType: CommandType.StoredProcedure).ToList();
+                            ctx.Close();
+                            return entity;
+                        }
+                        catch (ApiBusinessException ex)
+                        {
+                            ctx.Close();
+                            throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+                        }
+                        catch (Exception ex)
+                        {
+                            ctx.Close();
+                            throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+                        }
+                    }
+                }               
+            }
+            catch (ApiBusinessException ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
             catch (Exception ex)
             {

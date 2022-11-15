@@ -1,12 +1,15 @@
-﻿using DataModel.Context;
+﻿using Dapper;
+using DataModel.Context;
 using DataModel.Entities;
 using DataModel.Repositories.IRepository;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Resolver.Enums;
 using Resolver.HelperError.Handlers;
 using Resolver.HelperError.IExceptions;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -19,24 +22,55 @@ namespace DataModel.Repositories.Repository
         {
             _context = context;
         }
-        public string Create(SaleDetail saleDetail)
+        public IEnumerable<SaleDetailEntityDto> Create(SaleDetail saleDetail)
         {
             try
             {
                 if (saleDetail == null)
                     throw new ApiBusinessException("3000", "No se pudo realizar la venta", System.Net.HttpStatusCode.NotFound, "Http");
 
-                saleDetail.Id = Guid.NewGuid().ToString();
-                saleDetail.CreatedDate = DateTime.Now;
-                saleDetail.FinalDate = null;
-                saleDetail.state = (Int32)SaleEnum.PayActived;
+                using (var db = new DbGestionStockContext())
+                {
+                    using (var ctx = db.Database.GetDbConnection())
+                    {
+                        ctx.Open();
+                        try
+                        {
+                            saleDetail.Id = Guid.NewGuid().ToString();
+                            var values = new
+                            {
+                                isfirst = 1,
+                                saleId = saleDetail.SaleId,
+                                saledetailId = saleDetail.Id,
+                                AccountId = "",
+                                PaymentTypeId = "",
+                                Total = 0.0,
+                                price = saleDetail.price,
+                                productId = saleDetail.productId,
+                                quantity = saleDetail.quantity
+                            };
 
-                var entity = _context.Products.Find(saleDetail.productId);
-                entity.Stock--;
-
-                _context.Add(saleDetail);
-                _context.SaveChanges();
-                return saleDetail.SaleId;
+                            IEnumerable<SaleDetailEntityDto> entity = ctx.Query<SaleDetailEntityDto>("[dbo].[Sp_Insert_Sale]", values, commandType: CommandType.StoredProcedure);
+                            ctx.Close();
+                            return entity;
+                        }
+                        catch (ApiBusinessException ex)
+                        {
+                            ctx.Close();
+                            throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+                        }
+                        catch (Exception ex)
+                        {
+                            ctx.Close();
+                            throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+                        }
+                    }
+                }
+                
+            }
+            catch (ApiBusinessException ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
             catch (Exception ex)
             {

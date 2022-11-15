@@ -1,6 +1,8 @@
-﻿using DataModel.Context;
+﻿using Dapper;
+using DataModel.Context;
 using DataModel.Entities;
 using DataModel.Repositories.IRepository;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Resolver.Enums;
 using Resolver.HelperError.Handlers;
@@ -8,6 +10,7 @@ using Resolver.HelperError.IExceptions;
 using Resolver.QueryableExtensions;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -112,16 +115,49 @@ namespace DataModel.Repositories.Repository
             }
         }
 
-        public Product SearchProducByCode(string codeRef)
+        public Product SearchProducByCode(string codeRef, bool ischeckprice = false)
         {
             try
             {
-                var result = _context.Products.FirstOrDefault(u => u.ProductCode == codeRef && u.state == (Int32)StateEnum.Activeted && u.FinalDate == null);
-                if (result == null)
-                    throw new ApiBusinessException("3000", "NO existe producto para ese codigo", System.Net.HttpStatusCode.NotFound, "Http");
-                if (result.Stock == 0)
-                    throw new ApiBusinessException("3000", "Productto sin stock", System.Net.HttpStatusCode.NotFound, "Http");
-                return result;
+                using (var db = new DbGestionStockContext())
+                {
+                    using (var ctx = db.Database.GetDbConnection())
+                    {
+                        try
+                        {
+                            ctx.Open();
+                            var values = new
+                            {
+                                codeRef = codeRef
+                            };
+                            List<Product> entity = ctx.Query<Product>("[dbo].[Sp_Get_Product_CodRef]", values, commandType: CommandType.StoredProcedure).ToList();
+                            if (entity.Any())
+                            {
+                                var result = entity.FirstOrDefault();                               
+                                if (result.Stock == 0 && !ischeckprice)
+                                    throw new ApiBusinessException("3000", "Productto sin stock", System.Net.HttpStatusCode.NotFound, "Http");
+                                ctx.Close();
+                                return result;
+                            }
+                            else
+                                throw new ApiBusinessException("3000", "NO existe producto para ese codigo", System.Net.HttpStatusCode.NotFound, "Http"); ;
+                        }
+                        catch (ApiBusinessException ex)
+                        {
+                            ctx.Close();
+                            throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+                        }
+                        catch (Exception ex)
+                        {
+                            ctx.Close();
+                            throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+                        }
+                    }
+                }
+            }
+            catch (ApiBusinessException ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
             catch (Exception ex)
             {

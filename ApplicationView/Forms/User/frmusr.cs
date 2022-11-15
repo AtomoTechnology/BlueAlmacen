@@ -4,6 +4,7 @@ using ApplicationView.VariableSeesion;
 using BusnessEntities.BE;
 using DataService.Iservice;
 using Resolver.Enums;
+using Resolver.Helper;
 using Resolver.HelperError.IExceptions;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace ApplicationView.Forms.User
             InitializeComponent();
             _repo = repo;
             _repoRole = repoRole;
+            DataListHelper.SetGrid(this.dataList, 14, 12);
         }
         private void LoadList()
         {

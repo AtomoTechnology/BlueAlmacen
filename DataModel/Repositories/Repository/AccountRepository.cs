@@ -1,12 +1,15 @@
-﻿using DataModel.Context;
+﻿using Dapper;
+using DataModel.Context;
 using DataModel.Entities;
 using DataModel.Repositories.IRepository;
+using DataModel.SPEntities;
 using Microsoft.EntityFrameworkCore;
 using Resolver.Enums;
 using Resolver.HelperError.Handlers;
 using Resolver.HelperError.IExceptions;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -39,19 +42,27 @@ namespace DataModel.Repositories.Repository
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
         }
-        public Account Login(string username, string userpass) {
-            try
+        public AccountSP Login(string username, string userpass) {
+           
+            using (var db = new DbGestionStockContext())
             {
-                var entity = _context.Accounts.Include(p => p.Role).SingleOrDefault(u => u.UserName == username && u.UserPass == userpass && u.state == (Int32)StateEnum.Activeted);
-                if (entity == null)
-                    throw new ApiBusinessException("4000", "Usuario y/o contrasena incorrecto", System.Net.HttpStatusCode.NotFound, "Http");
-                return entity;
-            }
-            catch (Exception ex)
-            {
-                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+                using (var ctx = db.Database.GetDbConnection())
+                {
+                        ctx.Open();
+                        var values = new
+                        {
+                            username = username,
+                            userpass = userpass
+                        };
+                        IEnumerable<AccountSP> entity = ctx.Query<AccountSP>("[dbo].[Sp_login]", values, commandType: CommandType.StoredProcedure);
+                        ctx.Close();
+                    if (entity.Any())
+                        return entity.FirstOrDefault();
+                    return null;
+                }
             }
         }
+
         public string UpdatePassword(string oldpass, Business business) => throw new NotImplementedException();
     }
 }

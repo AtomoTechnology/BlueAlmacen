@@ -10,7 +10,7 @@ namespace DataModel.Repositories.IRepository
         List<SaleDetail> GetAll(int state, int page, int top, string orderBy, string ascending, string name, ref int count);
         List<SaleDetail> SearchAllDetailByCode(string saleCode);
         SaleDetail GetById(string id);
-        String Create(SaleDetail saleDetail);
+        IEnumerable<SaleDetailEntityDto> Create(SaleDetail saleDetail);
         String Update(string id, SaleDetail saleDetail);
         String Delete(string id);
     }

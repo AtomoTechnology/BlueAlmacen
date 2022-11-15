@@ -1,12 +1,16 @@
-﻿using DataModel.Context;
+﻿using Dapper;
+using DataModel.Context;
 using DataModel.Entities;
 using DataModel.Repositories.IRepository;
+using DataModel.SPEntities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Resolver.Enums;
 using Resolver.HelperError.Handlers;
 using Resolver.HelperError.IExceptions;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -19,42 +23,51 @@ namespace DataModel.Repositories.Repository
         {
             _context = context;
         }
-        public string Create(Sale sale)
+        public IEnumerable<SaleDetailEntityDto> Create(Sale sale)
         {
             try
             {
                 if (sale == null)
                     throw new ApiBusinessException("3000", "No se pudo realizar la venta", System.Net.HttpStatusCode.NotFound, "Http");
-                
-                Int64 InvoiceCode = 0;
-                var code = _context.Sales.ToList();
-
-                if (code.Count > 0)
-                    InvoiceCode = code.Max(u => u.InvoiceCode) + 1;
-                else
-                    InvoiceCode = 1;
-
-                sale.Id = Guid.NewGuid().ToString();
-                sale.CreatedDate = DateTime.Now;
-                sale.FinalDate = null;
-                sale.state = (Int32)SaleEnum.PayActived;
-                sale.InvoiceCode = InvoiceCode;
-
-                foreach (var item in sale.SaleDetail)
+                using (var db = new DbGestionStockContext())
                 {
-                    item.Id = Guid.NewGuid().ToString();
-                    item.SaleId = sale.Id;
-                    item.CreatedDate = DateTime.Now;
-                    item.FinalDate = null;
-                    item.state = (Int32)SaleEnum.PayActived;
-
-                    var entity = _context.Products.Find(item.productId);
-                    entity.Stock--;
-                }
-               
-                _context.Add(sale);
-                _context.SaveChanges();
-                return sale.Id;
+                    using (var ctx = db.Database.GetDbConnection())
+                    {
+                        try
+                        {
+                            ctx.Open();
+                            sale.Id = Guid.NewGuid().ToString();
+                            sale.SaleDetail[0].Id = Guid.NewGuid().ToString();
+                            var values = new
+                            {
+                                isfirst = 0,
+                                saleId = sale.Id,
+                                saledetailId = sale.SaleDetail[0].Id,
+                                AccountId = sale.AccountId,
+                                PaymentTypeId = sale.PaymentTypeId,
+                                Total = 0.0,
+                                price = sale.SaleDetail[0].price,
+                                productId = sale.SaleDetail[0].productId,
+                                quantity = sale.SaleDetail[0].quantity
+                            };
+                            IEnumerable<SaleDetailEntityDto> entity = ctx.Query<SaleDetailEntityDto>("[dbo].[Sp_Insert_Sale]", values, commandType: CommandType.StoredProcedure);
+                            ctx.Close();
+                            return entity;
+                        }
+                        catch (ApiBusinessException ex)
+                        {
+                            throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+                        }
+                    }
+                }                
+            }
+            catch (ApiBusinessException ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
             catch (Exception ex)
             {
@@ -70,6 +83,51 @@ namespace DataModel.Repositories.Repository
                 var entities = _context.PaymentTypes.Where(u => u.state == state && u.FinalDate == null);  
                 return entities.ToList();
             }
+            catch (ApiBusinessException ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
+            catch (Exception ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
+        }
+
+        public IEnumerable<SearchSaleSP> GetAllSaleHistoric(DateTime datefrom, DateTime dateto)
+        {
+            try
+            {               
+                using (var db = new DbGestionStockContext())
+                {
+                    using (var ctx = db.Database.GetDbConnection())
+                    {
+                        try
+                        {
+                            ctx.Open();                           
+                            var values = new
+                            {
+                                datefrom = datefrom,
+                                dateto = dateto
+                            };
+                            IEnumerable<SearchSaleSP> entity = ctx.Query<SearchSaleSP>("[dbo].[Sp_Search_Pay_By_Day]", values, commandType: CommandType.StoredProcedure);
+                            ctx.Close();
+                            return entity;
+                        }
+                        catch (ApiBusinessException ex)
+                        {
+                            throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+                        }
+                    }
+                }
+            }
+            catch (ApiBusinessException ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
             catch (Exception ex)
             {
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
@@ -82,6 +140,10 @@ namespace DataModel.Repositories.Repository
             {
                 var result = _context.Sales.Include(u => u.SaleDetail).SingleOrDefault(u => u.Id == id && u.state == (Int32)StateEnum.Activeted && u.FinalDate == null);
                 return result;
+            }
+            catch (ApiBusinessException ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
             catch (Exception ex)
             {
@@ -145,6 +207,10 @@ namespace DataModel.Repositories.Repository
                 _context.SaveChanges();
                 return "El lote fue dado de baja con exito!";
             }
+            catch (ApiBusinessException ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
+            }
             catch (Exception ex)
             {
                 throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
@@ -168,6 +234,10 @@ namespace DataModel.Repositories.Repository
                 _context.SaveChanges();
 
                 return "La venta fue realizado con exito!";
+            }
+            catch (ApiBusinessException ex)
+            {
+                throw HandlerExceptions.GetInstance().RunCustomExceptions(ex);
             }
             catch (Exception ex)
             {

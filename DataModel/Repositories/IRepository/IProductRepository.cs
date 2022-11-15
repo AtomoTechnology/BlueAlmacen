@@ -10,7 +10,7 @@ namespace DataModel.Repositories.IRepository
     {
         List<Product> GetAll(int state, int page, int top, string orderBy, string ascending, string name, ref int count);
         Product GetById(string id);
-        Product SearchProducByCode(string codeRef);
+        Product SearchProducByCode(string codeRef, bool ischeckprice = false);
         String Create(Product product);
         String Update(string id, Product product);
         Boolean SearchExpiredProductByLotCode(string lotCode);

@@ -6,6 +6,7 @@ using DataService.Iservice;
 using Resolver.HelperError.Handlers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataService.Service
@@ -17,13 +18,39 @@ namespace DataService.Service
         {
             _repo = repo;
         }
-        public string Create(SaleDetailBE saleDetail)
+        public List<SaleDetailDto> Create(SaleDetailBE saleDetail)
         {
             try
             {
                 var result = SaleDetailFactory.GetInstance().CreateEntity(saleDetail);
-                var entity = _repo.Create(result);
-                return entity;
+                var entity = _repo.Create(result).ToList();
+                List<SaleDetailDto> dto = new List<SaleDetailDto>();
+                if (entity.Count > 0)
+                {
+                    foreach (var item in entity)
+                    { 
+                        var resultitem = dto.Where(u => u.ProductCode == item.ProductCode).ToList();
+                        if (resultitem.Count > 0 )
+                        {
+                            resultitem[0].quantity = resultitem[0].quantity + 1;
+                        }
+                        else
+                        {
+                            dto.Add(new SaleDetailDto()
+                            {
+                                SaleId = item.SaleId,
+                                Id = item.Id,
+                                SalePrice = item.SalePrice,
+                                productId = item.productId,
+                                ProductName = item.ProductName,
+                                quantity = item.quantity,
+                                InvoiceCode = item.InvoiceCode,
+                                ProductCode = item.ProductCode
+                            });
+                        }                        
+                    }
+                }
+                return dto;
             }
             catch (Exception ex)
             {

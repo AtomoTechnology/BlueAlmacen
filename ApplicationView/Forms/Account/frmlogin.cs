@@ -1,6 +1,7 @@
 ﻿using ApplicationView.Forms.Account;
 using ApplicationView.VariableSeesion;
 using BusnessEntities.BE;
+using BusnessEntities.Dtos;
 using DataService.Iservice;
 using Resolver.HelperError.IExceptions;
 using System;
@@ -81,9 +82,8 @@ namespace ApplicationView
         {
             try
             {
-                string usuario, password;
-                usuario = Convert.ToString(this.txtusername.Text);
-                password = Convert.ToString(this.txtuserpass.Text);
+                string usuario = Convert.ToString(this.txtusername.Text);
+                string password = Convert.ToString(this.txtuserpass.Text);
                 if (string.IsNullOrEmpty(usuario))
                 {
                     MessageBox.Show("Ingrese el nombre de usuario", "Sistema de ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -99,10 +99,7 @@ namespace ApplicationView
                 }
                 else
                 {
-                    AccountBE Datos = _repo.Login(usuario, password);
-                    BusinessBE be = null;
-                    if (Datos != null)
-                        be = _repoBusiness.GetBusinessByUserId(Datos.UserId);
+                    AccountDTO Datos = _repo.Login(usuario, password);                
 
                     if (Datos.Confirm == false)
                     {
@@ -111,8 +108,8 @@ namespace ApplicationView
                         LoginInfo.IdRole = Datos.RoleId;
                         LoginInfo.UserName = Datos.UserName;
                         LoginInfo.Pass = Datos.UserPass;
-                        LoginInfo.Access = Datos?.Role?.RoleName;
-                        LoginInfo.IdBusiness = be?.Id;
+                        LoginInfo.Access = Datos.RoleName;
+                        LoginInfo.IdBusiness = Datos.BusinessId;
 
                         LoginInfo.isChangeCancelPass = true;
                         frmchangepass pass = new frmchangepass(_repo, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease, _repoUser);
@@ -126,8 +123,8 @@ namespace ApplicationView
                         LoginInfo.IdRole = Datos.RoleId;
                         LoginInfo.UserName = Datos.UserName;
                         LoginInfo.Pass = Datos.UserPass;
-                        LoginInfo.Access = Datos?.Role?.RoleName;
-                        LoginInfo.IdBusiness = be?.Id;
+                        LoginInfo.Access = Datos.RoleName;
+                        LoginInfo.IdBusiness = Datos.BusinessId;
                         LoginInfo.isChangeCancelPass = false;
 
                         frmPrincipal principal = new frmPrincipal(Datos, _repoRole, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease, _repo, _repoUser);

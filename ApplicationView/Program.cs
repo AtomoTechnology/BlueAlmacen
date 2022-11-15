@@ -84,6 +84,10 @@ namespace ApplicationView
                     services.AddScoped<IIncreasePriceAfterTwelveService, IncreasePriceAfterTwelveService>();
                     services.AddScoped<IUserService, UserService>();
 
+                    //AUtoMapper
+
+                    services.AddAutoMapper(typeof(DataService.Profiles.GestionStockMapperProfile));
+
                 });
         }
         private static String GetString()
@@ -92,6 +96,7 @@ namespace ApplicationView
                  .AddJsonFile("appsetting.json", optional: false, reloadOnChange: true);
             var configuration = builder.Build();
             var logFile = configuration["ConnectionStrings:DefaultConnection"];
+            DbGestionStockContext.sqlcnn = logFile;
             return logFile;
         }
         private static void UpdateDataBase(IServiceProvider serviceScopp)

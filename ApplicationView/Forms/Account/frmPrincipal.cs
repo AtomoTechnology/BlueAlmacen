@@ -8,6 +8,7 @@ using ApplicationView.Forms.Sale;
 using ApplicationView.Forms.User;
 using ApplicationView.VariableSeesion;
 using BusnessEntities.BE;
+using BusnessEntities.Dtos;
 using DataService.Iservice;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace ApplicationView.Forms.Account
 {
     public partial class frmPrincipal : Form
     {
-        AccountBE _be;
+        AccountDTO _be;
         private readonly IRoleService _repo;
         private readonly IBusnessService _repoBusiness;
         private readonly ICategoryService _repoCategory;
@@ -32,7 +33,7 @@ namespace ApplicationView.Forms.Account
         private readonly IIncreasePriceAfterTwelveService _repoIncrease;
         private readonly IAccountService _repoAccount;
         private readonly IUserService _repoUser;
-        public frmPrincipal(AccountBE be, IRoleService repo, IBusnessService repoBusiness, ICategoryService repoCategory,
+        public frmPrincipal(AccountDTO be, IRoleService repo, IBusnessService repoBusiness, ICategoryService repoCategory,
             IProviderService repoProvider, IProductService repoProduct, ISaleService repoSale, ISaleDetailService repoSaleDetail,
             IIncreasePriceAfterTwelveService repoIncrease, IAccountService repoAccount, IUserService repoUser)
         {
@@ -186,40 +187,42 @@ namespace ApplicationView.Forms.Account
         #region Permission
         private void GestionUser()
         {
+            codigoToolStripMenuItem.Enabled = false;
+            fechaToolStripMenuItem.Enabled = false;
             if (LoginInfo.Access.ToLower() == ("Admin").ToLower())
             {
-                //this.ingresoToolStripMenuItem.Enabled = true;
-                //this.saleToolStripMenuItem.Enabled = true;
-                //this.consultarStockToolStripMenuItem.Enabled = false;
-                //this.consultaToolStripMenuItem.Enabled = false;
-                //this.promoToolStripMenuItem.Enabled = false;
-                //this.egresoToolStripMenuItem.Enabled = true;
-                //this.productosToolStripMenuItem.Enabled = true;
-                //this.vencimientoToolStripMenuItem.Enabled = false;
-                //this.movimientoToolStripMenuItem.Enabled = false;
-                //this.reportesToolStripMenuItem.Enabled = false;
-                //this.gestionDeUsuarioToolStripMenuItem.Enabled = false;
-                //this.crearUsuarioToolStripMenuItem.Enabled = true;
-                //this.cambiarContraseñaToolStripMenuItem.Enabled = true;
-                //this.gestionarProveedorToolStripMenuItem.Enabled = true;
-                //this.proveedorToolStripMenuItem.Enabled = true;
-                //this.gestionDeCajaToolStripMenuItem.Enabled = false;
-                //this.abreCajaToolStripMenuItem.Enabled = false;
-                //this.seguridadToolStripMenuItem.Enabled = true;
-                //this.roleToolStripMenuItem.Enabled = false;
-                //this.backupToolStripMenuItem.Enabled = false;
-                //this.historialToolStripMenuItem.Enabled = false;
-                //this.formaDePagoToolStripMenuItem.Enabled = false;
-                //this.gestionarNegocioToolStripMenuItem.Enabled = true;
-                //this.categoriaToolStripMenuItem.Enabled = true;
-                //this.incrementoDespuesDeLas12PMToolStripMenuItem.Enabled = true;
-                //this.actualizarPrecioDeProductoToolStripMenuItem.Enabled = true;
+                this.ingresoToolStripMenuItem.Enabled = true;
+                this.saleToolStripMenuItem.Enabled = true;
+                this.consultarStockToolStripMenuItem.Enabled = true;
+                this.consultaToolStripMenuItem.Enabled = false;
+                this.promoToolStripMenuItem.Enabled = false;
+                this.egresoToolStripMenuItem.Enabled = true;
+                this.productosToolStripMenuItem.Enabled = true;
+                this.vencimientoToolStripMenuItem.Enabled = false;
+                this.movimientoToolStripMenuItem.Enabled = false;
+                this.reportesToolStripMenuItem.Enabled = false;
+                this.gestionDeUsuarioToolStripMenuItem.Enabled = true;
+                this.crearUsuarioToolStripMenuItem.Enabled = true;
+                this.cambiarContraseñaToolStripMenuItem.Enabled = true;
+                this.gestionarProveedorToolStripMenuItem.Enabled = true;
+                this.proveedorToolStripMenuItem.Enabled = true;
+                this.gestionDeCajaToolStripMenuItem.Enabled = false;
+                this.abreCajaToolStripMenuItem.Enabled = false;
+                this.seguridadToolStripMenuItem.Enabled = true;
+                this.roleToolStripMenuItem.Enabled = false;
+                this.backupToolStripMenuItem.Enabled = false;
+                this.historialToolStripMenuItem.Enabled = false;
+                this.formaDePagoToolStripMenuItem.Enabled = false;
+                this.gestionarNegocioToolStripMenuItem.Enabled = true;
+                this.categoriaToolStripMenuItem.Enabled = true;
+                this.incrementoDespuesDeLas12PMToolStripMenuItem.Enabled = true;
+                this.actualizarPrecioDeProductoToolStripMenuItem.Enabled = true;
             }
             else if (LoginInfo.Access.ToLower() == ("Empleado(a)").ToLower())
             {
                 this.ingresoToolStripMenuItem.Enabled = true;
                 this.saleToolStripMenuItem.Enabled = true;
-                this.consultarStockToolStripMenuItem.Enabled = false;
+                this.consultarStockToolStripMenuItem.Enabled = true;
                 this.consultaToolStripMenuItem.Enabled = false;
                 this.promoToolStripMenuItem.Enabled = false;
                 this.egresoToolStripMenuItem.Enabled = false;
@@ -248,7 +251,7 @@ namespace ApplicationView.Forms.Account
             {
                 this.ingresoToolStripMenuItem.Enabled = true;
                 this.saleToolStripMenuItem.Enabled = true;
-                this.consultarStockToolStripMenuItem.Enabled = false;
+                this.consultarStockToolStripMenuItem.Enabled = true;
                 this.consultaToolStripMenuItem.Enabled = false;
                 this.promoToolStripMenuItem.Enabled = false;
                 this.egresoToolStripMenuItem.Enabled = false;
@@ -292,7 +295,24 @@ namespace ApplicationView.Forms.Account
             frmchangepass pass = new frmchangepass(_repoAccount, _repo, _repoBusiness, _repoCategory, _repoProvider, _repoProduct, _repoSale, _repoSaleDetail, _repoIncrease, _repoUser);
             LoginInfo.isChangeCancelPass = false;
             pass.Show();
-            //this.Close();
+        }
+
+        private void precioProductoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmcheckprice frm = new frmcheckprice(_repoProduct);
+            frm.Show();
+        }
+
+        private void codigoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmiexpiredDate frm = new frmiexpiredDate();
+            frm.Show();
+        }
+
+        private void fechaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmsalehistoric frm = new frmsalehistoric();
+            frm.Show();
         }
     }
 }

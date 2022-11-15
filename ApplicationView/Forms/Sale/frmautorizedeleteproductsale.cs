@@ -1,4 +1,5 @@
 ﻿using BusnessEntities.BE;
+using BusnessEntities.Dtos;
 using DataService.Iservice;
 using Resolver.HelperError.IExceptions;
 using System;
@@ -47,9 +48,9 @@ namespace ApplicationView.Forms.Sale
                 }
                 else
                 {
-                    AccountBE Datos = _repo.Login(usuario, password);
+                    AccountDTO Datos = _repo.Login(usuario, password);
 
-                    if (Datos.Role.RoleName.ToLower() == "Admin".ToLower())
+                    if (Datos.RoleName.ToLower() == "Admin".ToLower())
                     {
                         try
                         {

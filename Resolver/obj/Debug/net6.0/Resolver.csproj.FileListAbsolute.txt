@@ -1,0 +1,14 @@
+C:\Empredimiento\BLUE\GestionStock\Resolver\bin\Debug\net6.0\Resolver.deps.json
+C:\Empredimiento\BLUE\GestionStock\Resolver\bin\Debug\net6.0\Resolver.dll
+C:\Empredimiento\BLUE\GestionStock\Resolver\bin\Debug\net6.0\Resolver.pdb
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\net6.0\Resolver.csproj.AssemblyReference.cache
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\net6.0\Resolver.GeneratedMSBuildEditorConfig.editorconfig
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\net6.0\Resolver.AssemblyInfoInputs.cache
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\net6.0\Resolver.AssemblyInfo.cs
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\net6.0\Resolver.csproj.CoreCompileInputs.cache
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\net6.0\Resolver.dll
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\net6.0\refint\Resolver.dll
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\net6.0\Resolver.pdb
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\net6.0\ref\Resolver.dll
+C:\Empredimiento\BLUE\GestionStock\Resolver\bin\Debug\net6.0\System.Windows.Forms.dll
+C:\Empredimiento\BLUE\GestionStock\Resolver\obj\Debug\net6.0\Resolver.csproj.CopyComplete

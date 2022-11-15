@@ -1,0 +1,12 @@
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\bin\Debug\net6.0\BusnessEntities.deps.json
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\bin\Debug\net6.0\BusnessEntities.dll
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\bin\Debug\net6.0\BusnessEntities.pdb
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\net6.0\BusnessEntities.csproj.AssemblyReference.cache
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\net6.0\BusnessEntities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\net6.0\BusnessEntities.AssemblyInfoInputs.cache
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\net6.0\BusnessEntities.AssemblyInfo.cs
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\net6.0\BusnessEntities.csproj.CoreCompileInputs.cache
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\net6.0\BusnessEntities.dll
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\net6.0\refint\BusnessEntities.dll
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\net6.0\BusnessEntities.pdb
+C:\Empredimiento\BLUE\GestionStock\BusnessEntities\obj\Debug\net6.0\ref\BusnessEntities.dll
